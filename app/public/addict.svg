@@ -1,0 +1,17 @@
+<svg  xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .base-text {
+            font-family: "Arial", sans-serif;
+            font-weight: bold;
+            font-size: 50px;
+            fill: #003366;
+        }
+        .highlight-text {
+            font-size: 50px;
+            fill: #0086A3;
+        }
+    </style>
+    <text x="10" y="60" class="base-text">a</text>
+    <text x="40" y="60" class="highlight-text">DDI</text>
+    <text x="130" y="60" class="base-text">ct</text>
+</svg>

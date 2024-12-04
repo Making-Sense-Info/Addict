@@ -22,3 +22,4 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./resources
         publish_branch: gh-pages
+        keep_files: true
