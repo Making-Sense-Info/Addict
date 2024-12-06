@@ -1,5 +1,3 @@
 # DDI resources
 
-TODO
-
-## Questionnaires
+Folder to deploy and share DDI resources.

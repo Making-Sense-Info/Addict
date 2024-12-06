@@ -7,5 +7,17 @@
     "quoteProps": "preserve",
     "trailingComma": "none",
     "bracketSpacing": true,
-    "arrowParens": "avoid"
+    "arrowParens": "avoid",
+    "plugins": ["@trivago/prettier-plugin-sort-imports"],
+    "importOrderSeparation": true,
+    "importOrder": [
+        "^@components/(.*)$",
+        "^@pages/(.*)$",
+        "^@store/(.*)$",
+        "^@api/(.*)$",
+        "^@utils/(.*)$",
+        "^@model/(.*)$",
+        "^@theme/(.*)$",
+        "^[./]"
+    ]
 }
