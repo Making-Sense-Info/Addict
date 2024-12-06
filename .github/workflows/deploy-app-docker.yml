@@ -37,7 +37,8 @@ jobs:
         with:
           context: ./app
           file: ./app/Dockerfile
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
+          push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/addict:${{ github.ref_name }}
             ${{ secrets.DOCKERHUB_USERNAME }}/addict:latest
