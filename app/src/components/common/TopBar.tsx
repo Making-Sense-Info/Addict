@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@store/index";
 
 import ThemeSwitcher from "./ThemeSwitcher";
-import addictLogo from "/addict.svg";
 
 function TopBar() {
     const navigate = useNavigate();
@@ -43,7 +42,7 @@ function TopBar() {
                     }}
                     onClick={() => navigate("/")}
                 >
-                    <img src={addictLogo} className="logo" alt="Addict logo" />
+                    <img src={"/addict.svg"} className="logo" alt="Addict logo" />
                 </Box>
 
                 {/* Theme Switcher */}
