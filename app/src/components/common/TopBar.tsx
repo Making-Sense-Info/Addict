@@ -9,7 +9,7 @@ import { useTheme } from "@store/index";
 
 import ThemeSwitcher from "./ThemeSwitcher";
 
-function TopBar() {
+const TopBar = () => {
     const navigate = useNavigate();
     const { theme, setTheme } = useTheme();
 
@@ -50,6 +50,6 @@ function TopBar() {
             </Toolbar>
         </AppBar>
     );
-}
+};
 
 export default TopBar;
