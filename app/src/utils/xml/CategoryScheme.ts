@@ -1,4 +1,4 @@
-import { CATEGORY_SCHEME_PATH, CATEGORY_SCHEME_TYPE } from "@utils/contants";
+import { CATEGORY_SCHEME_PATH, CATEGORY_SCHEME } from "@utils/contants";
 
 import { DDIBaseObject } from "@model/ddi";
 
@@ -17,7 +17,7 @@ export const getCategorySchemes = (xmlDoc: Document): DDIBaseObject[] => {
         return {
             id: `${agency}:${id}:${version}`,
             label: getPreferedLabel(getLabelsByLang(labels)),
-            type: CATEGORY_SCHEME_TYPE
+            type: CATEGORY_SCHEME
         };
     });
 };

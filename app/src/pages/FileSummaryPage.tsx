@@ -1,4 +1,4 @@
-import DDIContent from "@components/ddi-content";
+import DDIContent from "@components/ddi-summary";
 
 const FilePage = () => {
     return <DDIContent />;

@@ -8,9 +8,9 @@ import { getContent } from "@api/index";
 import { getResourcesUrl } from "@utils/index";
 import { getDDIObjects } from "@utils/xml";
 
-import DDIContent from "./DDIContent";
+import DDISummary from "./DDISummary";
 
-function DDIContentContainer() {
+function DDISummaryContainer() {
     const { "*": path = "" } = useParams();
 
     const { data, isPending, error } = useQuery({
@@ -27,7 +27,7 @@ function DDIContentContainer() {
 
     const objects = getDDIObjects(xmlDoc);
 
-    return <DDIContent objects={objects} />;
+    return <DDISummary objects={objects} />;
 }
 
-export default DDIContentContainer;
+export default DDISummaryContainer;

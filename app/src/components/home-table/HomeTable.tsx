@@ -42,8 +42,6 @@ const HomeTable = ({ data, path, setPath }: HomeTableProps) => {
         setPage(newPage);
     };
 
-    console.log(paginatedData);
-
     return (
         <TableContainer component={Paper} sx={{ width: "40%", margin: "auto", marginTop: "2em" }}>
             <Table>

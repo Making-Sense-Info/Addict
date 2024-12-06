@@ -1,4 +1,3 @@
-import FilterListIcon from "@mui/icons-material/FilterList";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
     Table,
@@ -9,39 +8,42 @@ import {
     TableRow,
     TableSortLabel,
     TextField,
-    Checkbox,
-    FormControlLabel,
     TablePagination,
     IconButton,
-    Tooltip,
     Box,
     Chip,
     Paper
 } from "@mui/material";
-import { useEffect, useRef } from "react";
 import React, { useState } from "react";
 
-import { CATEGORY_SCHEME_TYPE } from "@utils/contants";
+import { TruncatedTableCell } from "@components/common";
+
+import { CATEGORY_SCHEME, DDI_OBJECTS } from "@utils/contants";
 
 import { DDIBaseObject } from "@model/ddi";
+import { type DDIObjectTypes } from "@model/index";
+
+import TypeFilter from "./TypeFilter";
 
 interface Row {
     id: string;
     label: string;
-    type: typeof CATEGORY_SCHEME_TYPE;
+    type: DDIObjectTypes;
 }
 
-type DDIContentProps = {
+type DDISummaryProps = {
     objects: DDIBaseObject[];
 };
 
-export default function DDIContent({ objects }: DDIContentProps) {
+const typeColors: Record<Row["type"], any> = {
+    [CATEGORY_SCHEME]: "primary"
+};
+
+const DDISummary = ({ objects }: DDISummaryProps) => {
     const [order, setOrder] = useState<"asc" | "desc">("asc");
     const [orderBy, setOrderBy] = useState<keyof Row>("label");
     const [filterText, setFilterText] = useState("");
-    const [selectedTypes, setSelectedTypes] = useState<Set<Row["type"]>>(
-        new Set([CATEGORY_SCHEME_TYPE])
-    );
+    const [selectedTypes, setSelectedTypes] = useState<Set<Row["type"]>>(new Set(DDI_OBJECTS));
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -89,10 +91,6 @@ export default function DDIContent({ objects }: DDIContentProps) {
         });
 
     const paginatedRows = filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
-    const typeColors: Record<Row["type"], string> = {
-        [CATEGORY_SCHEME_TYPE]: "primary"
-    };
 
     return (
         <Paper sx={{ width: "80%", margin: "auto", marginTop: "2em" }}>
@@ -151,7 +149,7 @@ export default function DDIContent({ objects }: DDIContentProps) {
                                 >
                                     Type
                                     <TypeFilter
-                                        types={["file", "dir"]}
+                                        types={DDI_OBJECTS}
                                         selectedTypes={selectedTypes}
                                         onToggleType={handleTypeChange}
                                     />
@@ -163,28 +161,8 @@ export default function DDIContent({ objects }: DDIContentProps) {
                     <TableBody>
                         {paginatedRows.map(row => (
                             <TableRow key={row.id}>
-                                <TableCell
-                                    sx={{
-                                        padding: 1,
-                                        whiteSpace: "nowrap",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        maxWidth: "200px"
-                                    }}
-                                >
-                                    {row.id + row.id}
-                                </TableCell>
-                                <TableCell
-                                    sx={{
-                                        padding: 1,
-                                        whiteSpace: "nowrap",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        maxWidth: "200px"
-                                    }}
-                                >
-                                    {row.label}
-                                </TableCell>
+                                <TruncatedTableCell maxWidth={200}>{row.id}</TruncatedTableCell>
+                                <TruncatedTableCell maxWidth={200}>{row.label}</TruncatedTableCell>
                                 <TableCell sx={{ padding: 1, textAlign: "center" }}>
                                     <Chip label={row.type} color={typeColors[row.type]} />
                                 </TableCell>
@@ -203,8 +181,8 @@ export default function DDIContent({ objects }: DDIContentProps) {
                     </TableBody>
                 </Table>
             </TableContainer>
-
             <TablePagination
+                sx={{ zIndex: -1 }}
                 rowsPerPageOptions={[10, 25, 50]}
                 component="div"
                 count={filteredRows.length}
@@ -215,64 +193,6 @@ export default function DDIContent({ objects }: DDIContentProps) {
             />
         </Paper>
     );
-}
-
-const useClickOutside = (ref, callback) => {
-    useEffect(() => {
-        const handleClickOutside = event => {
-            if (ref.current && !ref.current.contains(event.target)) {
-                callback();
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [ref, callback]);
 };
 
-const TypeFilter = ({ types, selectedTypes, onToggleType }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const filterRef = useRef(null);
-
-    useClickOutside(filterRef, () => setIsOpen(false));
-
-    return (
-        <Box sx={{ position: "relative" }}>
-            <Tooltip title="Filter by Type">
-                <IconButton size="small" onClick={() => setIsOpen(prev => !prev)}>
-                    <FilterListIcon />
-                </IconButton>
-            </Tooltip>
-            {isOpen && (
-                <Paper
-                    ref={filterRef}
-                    elevation={3}
-                    sx={{
-                        position: "absolute",
-                        top: "100%",
-                        right: 0,
-                        zIndex: 10,
-                        padding: 1,
-                        maxHeight: 200,
-                        overflowY: "auto"
-                    }}
-                >
-                    {types.map(type => (
-                        <FormControlLabel
-                            key={type}
-                            control={
-                                <Checkbox
-                                    checked={selectedTypes.has(type)}
-                                    onChange={() => onToggleType(type)}
-                                />
-                            }
-                            label={type}
-                        />
-                    ))}
-                </Paper>
-            )}
-        </Box>
-    );
-};
+export default DDISummary;

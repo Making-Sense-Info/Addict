@@ -27,6 +27,7 @@
             "@pages/*": ["./src/pages/*"],
             "@store/*": ["./src/store/*"],
             "@api/*": ["./src/api/*"],
+            "@hooks/*": ["./src/hooks/*"],
             "@utils/*": ["./src/utils/*"],
             "@model/*": ["./src/model/*"],
             "@theme/*": ["./src/theme/*"]
