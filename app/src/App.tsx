@@ -9,7 +9,7 @@ import { useTheme } from "@store/index";
 import { lightTheme, darkTheme } from "@theme/index";
 
 const queryClient = new QueryClient({
-    defaultOptions: { queries: { retry: false, gcTime: 5 * 60 * 1000 } }
+    defaultOptions: { queries: { retry: false, staleTime: 5 * 60 * 1000 } }
 });
 
 const App = () => {

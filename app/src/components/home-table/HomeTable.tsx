@@ -90,7 +90,7 @@ const HomeTable = ({ data, path, setPath }: HomeTableProps) => {
                                     <IconButton
                                         color="primary"
                                         onClick={() => {
-                                            navigate(`/file/${item.path}`);
+                                            navigate(`/summary?path=${item.path}`);
                                         }}
                                     >
                                         <VisibilityIcon />

@@ -4,12 +4,12 @@ import { useRef, useState } from "react";
 
 import { useClickOutside } from "@hooks/click";
 
-import { DDIObjectTypes } from "@model/ddi";
+import { DDIObjectIDs } from "@model/ddi";
 
 type TypeFilterProps = {
-    types: Array<DDIObjectTypes>;
-    selectedTypes: Set<DDIObjectTypes>;
-    onToggleType: (d: DDIObjectTypes) => void;
+    types: Array<DDIObjectIDs>;
+    selectedTypes: Set<DDIObjectIDs>;
+    onToggleType: (d: DDIObjectIDs) => void;
 };
 
 const TypeFilter = ({ types, selectedTypes, onToggleType }: TypeFilterProps) => {

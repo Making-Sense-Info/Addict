@@ -15,31 +15,35 @@ import {
     Paper
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { TruncatedTableCell } from "@components/common";
 
-import { CATEGORY_SCHEME, DDI_OBJECTS } from "@utils/contants";
+import { getLabelFromId } from "@utils/badges";
+import { CATEGORY_SCHEME_ID, DDI_OBJECTS } from "@utils/contants";
 
 import { DDIBaseObject } from "@model/ddi";
-import { type DDIObjectTypes } from "@model/index";
+import { type DDIObjectIDs } from "@model/index";
 
 import TypeFilter from "./TypeFilter";
 
 interface Row {
-    id: string;
+    URN: string;
     label: string;
-    type: DDIObjectTypes;
+    type: DDIObjectIDs;
 }
 
 type DDISummaryProps = {
     objects: DDIBaseObject[];
+    path: string;
 };
 
 const typeColors: Record<Row["type"], any> = {
-    [CATEGORY_SCHEME]: "primary"
+    [CATEGORY_SCHEME_ID]: "primary"
 };
 
-const DDISummary = ({ objects }: DDISummaryProps) => {
+const DDISummary = ({ objects, path }: DDISummaryProps) => {
+    const navigate = useNavigate();
     const [order, setOrder] = useState<"asc" | "desc">("asc");
     const [orderBy, setOrderBy] = useState<keyof Row>("label");
     const [filterText, setFilterText] = useState("");
@@ -77,12 +81,13 @@ const DDISummary = ({ objects }: DDISummaryProps) => {
     const filteredRows = objects
         .filter(row => {
             return (
-                row.id.includes(filterText) || row.label.toLowerCase().includes(filterText.toLowerCase())
+                row.URN.includes(filterText) ||
+                row.label.toLowerCase().includes(filterText.toLowerCase())
             );
         })
         .filter(row => selectedTypes.has(row.type))
         .sort((a, b) => {
-            if (orderBy === "id" || orderBy === "label") {
+            if (orderBy === "URN" || orderBy === "label") {
                 const valueA = a[orderBy].toLowerCase();
                 const valueB = b[orderBy].toLowerCase();
                 return (valueA < valueB ? -1 : 1) * (order === "asc" ? 1 : -1);
@@ -115,9 +120,9 @@ const DDISummary = ({ objects }: DDISummaryProps) => {
                                 }}
                             >
                                 <TableSortLabel
-                                    active={orderBy === "id"}
+                                    active={orderBy === "URN"}
                                     direction={order}
-                                    onClick={() => handleSort("id")}
+                                    onClick={() => handleSort("URN")}
                                 >
                                     ID
                                 </TableSortLabel>
@@ -160,17 +165,22 @@ const DDISummary = ({ objects }: DDISummaryProps) => {
                     </TableHead>
                     <TableBody>
                         {paginatedRows.map(row => (
-                            <TableRow key={row.id}>
-                                <TruncatedTableCell maxWidth={200}>{row.id}</TruncatedTableCell>
+                            <TableRow key={row.URN}>
+                                <TruncatedTableCell maxWidth={200}>{row.URN}</TruncatedTableCell>
                                 <TruncatedTableCell maxWidth={200}>{row.label}</TruncatedTableCell>
                                 <TableCell sx={{ padding: 1, textAlign: "center" }}>
-                                    <Chip label={row.type} color={typeColors[row.type]} />
+                                    <Chip
+                                        label={getLabelFromId(row.type)}
+                                        color={typeColors[row.type]}
+                                    />
                                 </TableCell>
                                 <TableCell>
                                     <IconButton
                                         color="primary"
                                         onClick={() => {
-                                            alert("Coming soon");
+                                            navigate(
+                                                `/${row.type}/${row.URN.split(":")[1]}?path=${path}`
+                                            );
                                         }}
                                     >
                                         <VisibilityIcon />

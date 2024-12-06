@@ -11,3 +11,10 @@ export const getPreferedLabel = (labels: Record<string, string>): string => {
     if (PREFERED_LANGUAGE in labels) return labels[PREFERED_LANGUAGE];
     return "";
 };
+
+export const getElementURN = (e: Element): string => {
+    const agency = e.querySelector("Agency")?.textContent;
+    const id = e.querySelector("ID")?.textContent;
+    const version = e.querySelector("Version")?.textContent;
+    return `${agency}:${id}:${version}`;
+};

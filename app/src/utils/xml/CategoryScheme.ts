@@ -1,23 +1,33 @@
-import { CATEGORY_SCHEME_PATH, CATEGORY_SCHEME } from "@utils/contants";
+import { CATEGORY_SCHEME_ID, CATEGORY_SCHEME_XML_PATH } from "@utils/contants";
 
-import { DDIBaseObject } from "@model/ddi";
+import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
-import { getLabelsByLang, getPreferedLabel } from "./common";
+import { getElementURN, getLabelsByLang, getPreferedLabel } from "./common";
 
 export const getCategorySchemes = (xmlDoc: Document): DDIBaseObject[] => {
-    const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_PATH);
+    const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_XML_PATH);
     return Array.from(categorySchemes).map(c => {
-        const agency = c.querySelector("Agency")?.textContent;
-        const id = c.querySelector("ID")?.textContent;
-        const version = c.querySelector("Version")?.textContent;
         const labels = c.getElementsByTagName("r:Content");
-        // TODO: handle
-        // const categories = c.getElementsByTagName(CATEGORY_PATH);
-
         return {
-            id: `${agency}:${id}:${version}`,
+            URN: getElementURN(c),
             label: getPreferedLabel(getLabelsByLang(labels)),
-            type: CATEGORY_SCHEME
+            type: CATEGORY_SCHEME_ID
         };
     });
+};
+
+export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObject => {
+    const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_XML_PATH);
+    const categoryScheme = Array.from(categorySchemes).find(c => {
+        const foundId = c.querySelector("ID")?.textContent;
+        return id === foundId;
+    });
+    if (!categoryScheme) throw new Error(`Unknow Category Scheme: ${id}`);
+    const labels = categoryScheme.getElementsByTagName("r:Content");
+    // TODO getCategories as child
+    // TODO find parent
+    return {
+        URN: getElementURN(categoryScheme),
+        labels: getLabelsByLang(labels)
+    };
 };

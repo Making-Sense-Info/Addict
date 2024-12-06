@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import { Loader, Error } from "@components/common";
 
@@ -11,7 +11,8 @@ import { getDDIObjects } from "@utils/xml";
 import DDISummary from "./DDISummary";
 
 function DDISummaryContainer() {
-    const { "*": path = "" } = useParams();
+    const [searchParams] = useSearchParams();
+    const path = searchParams.get("path") ?? "";
 
     const { data, isPending, error } = useQuery({
         queryKey: ["content", [path]],
@@ -27,7 +28,7 @@ function DDISummaryContainer() {
 
     const objects = getDDIObjects(xmlDoc);
 
-    return <DDISummary objects={objects} />;
+    return <DDISummary objects={objects} path={path} />;
 }
 
 export default DDISummaryContainer;

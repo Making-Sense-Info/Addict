@@ -1,9 +1,15 @@
-import { CATEGORY_SCHEME } from "@utils/contants";
+import { CATEGORY_SCHEME_ID, CATEGORY_SCHEME_LABEL } from "@utils/contants";
 
-export type DDIObjectTypes = typeof CATEGORY_SCHEME;
+export type DDIObjectIDs = typeof CATEGORY_SCHEME_ID;
+export type DDIObjectLabels = typeof CATEGORY_SCHEME_LABEL;
 
 export type DDIBaseObject = {
-    id: string;
+    URN: string;
     label: string;
-    type: DDIObjectTypes;
+    type: DDIObjectIDs;
+};
+
+export type DDIDetailledObject = {
+    URN: string;
+    labels: Record<string, string>;
 };
