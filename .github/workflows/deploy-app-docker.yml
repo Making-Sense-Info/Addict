@@ -3,7 +3,7 @@ name: Deploy Addict app to Docker Hub
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
 
 jobs:
   build-and-push:
@@ -39,5 +39,5 @@ jobs:
           file: ./app/Dockerfile
           platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/addict:${{ github.ref_name }}
-            ${{ secrets.DOCKER_USERNAME }}/addict:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/addict:${{ github.ref_name }}
+            ${{ secrets.DOCKERHUB_TOKEN }}/addict:latest

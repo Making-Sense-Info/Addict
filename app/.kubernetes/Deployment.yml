@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: addict
+    labels:
+        app: addict
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: addict
+    template:
+        metadata:
+            labels:
+                app: addict
+        spec:
+            containers:
+                - name: addict
+                  image: makingsenseinfo/addict:0.1.0
+                  imagePullPolicy: IfNotPresent
+                  ports:
+                      - containerPort: 80
+                  env:
+                      - name: GITHUB_TOKEN
+                        value: "XXX"
