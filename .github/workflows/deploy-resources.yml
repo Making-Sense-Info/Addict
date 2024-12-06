@@ -8,7 +8,7 @@ on:
       - 'resources/**'
 
 jobs:
-  deploy:
+  deploy-resources:
     runs-on: ubuntu-latest
     permissions:
       contents: write
