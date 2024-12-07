@@ -18,6 +18,6 @@ export const getBadgeColor =
     (baseColor: string) =>
     (id: DDIObjectIDs): string => {
         if (id === CATEGORY_SCHEME_ID) return lighten(baseColor, 0);
-        if (id === CATEGORY_ID) return lighten(baseColor, 0);
+        if (id === CATEGORY_ID) return lighten(baseColor, 0.15);
         throw new Error(`Unknow id: ${id}`);
     };
