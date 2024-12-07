@@ -36,23 +36,29 @@ const TypeFilter = ({ types, selectedTypes, onToggleType }: TypeFilterProps) => 
                         right: 0,
                         zIndex: 1000,
                         padding: 1,
-                        overflowY: "hidden",
+                        paddingLeft: 3,
                         width: "250px",
-                        height: "auto"
+                        maxHeight: "300px",
+                        overflowY: "auto",
+                        overflowX: "hidden",
+                        display: "flex",
+                        flexDirection: "column"
                     }}
                 >
-                    {types.map(type => (
-                        <FormControlLabel
-                            key={type}
-                            control={
-                                <Checkbox
-                                    checked={selectedTypes.has(type)}
-                                    onChange={() => onToggleType(type)}
-                                />
-                            }
-                            label={type}
-                        />
-                    ))}
+                    {types
+                        .sort((a, b) => (a > b ? 1 : -1))
+                        .map(type => (
+                            <FormControlLabel
+                                key={type}
+                                control={
+                                    <Checkbox
+                                        checked={selectedTypes.has(type)}
+                                        onChange={() => onToggleType(type)}
+                                    />
+                                }
+                                label={type}
+                            />
+                        ))}
                 </Paper>
             )}
         </Box>
