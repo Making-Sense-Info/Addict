@@ -4,11 +4,11 @@
             font-family: "Arial", sans-serif;
             font-weight: bold;
             font-size: 50px;
-            fill: #003366;
+            fill: #FFFFFF;
         }
         .highlight-text {
             font-size: 50px;
-            fill: #0086A3;
+            fill: #085768;
         }
     </style>
     <text x="10" y="60" class="base-text">a</text>

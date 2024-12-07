@@ -35,19 +35,21 @@ const KeyValueBox: React.FC<KeyValueBoxProps> = ({ label, values }) => {
             </Typography>
             {isList ? (
                 <List sx={{ pl: 2 }}>
-                    {values.map((value, index) => (
-                        <ListItem key={index} disablePadding>
-                            <ListItemText
-                                primary={value}
-                                primaryTypographyProps={{
-                                    variant: "body2",
-                                    sx: { color: "text.primary" }
-                                }}
-                            />
-                        </ListItem>
-                    ))}
+                    {values.map((value, index) =>
+                        value ? (
+                            <ListItem key={index} disablePadding>
+                                <ListItemText
+                                    primary={value}
+                                    primaryTypographyProps={{
+                                        variant: "body2",
+                                        sx: { color: "text.primary" }
+                                    }}
+                                />
+                            </ListItem>
+                        ) : null
+                    )}
                 </List>
-            ) : (
+            ) : values ? (
                 <Typography
                     variant="body2"
                     sx={{
@@ -57,7 +59,7 @@ const KeyValueBox: React.FC<KeyValueBoxProps> = ({ label, values }) => {
                 >
                     {values}
                 </Typography>
-            )}
+            ) : null}
         </Box>
     );
 };

@@ -20,7 +20,6 @@ const TopBar = () => {
     return (
         <AppBar position="static" color="primary">
             <Toolbar>
-                {/* Home Icon */}
                 <IconButton
                     edge="start"
                     color="inherit"
@@ -30,8 +29,6 @@ const TopBar = () => {
                 >
                     <HomeIcon />
                 </IconButton>
-
-                {/* Addict Logo */}
                 <Box
                     sx={{
                         display: "flex",
@@ -42,10 +39,8 @@ const TopBar = () => {
                     }}
                     onClick={() => navigate("/")}
                 >
-                    <img src={"/addict.svg"} className="logo" alt="Addict logo" />
+                    <img src={`/addict-${theme}.svg`} className="logo" alt="Addict logo" />
                 </Box>
-
-                {/* Theme Switcher */}
                 <ThemeSwitcher isDarkMode={theme === "dark"} toggleTheme={updateTheme} />
             </Toolbar>
         </AppBar>

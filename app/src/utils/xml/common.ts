@@ -18,3 +18,6 @@ export const getElementURN = (e: Element): string => {
     const version = e.querySelector("Version")?.textContent;
     return `${agency}:${id}:${version}`;
 };
+
+export const getElementLabel = (e: Element): string =>
+    getLabelsByLang(e.getElementsByTagName("r:Content"))[PREFERED_LANGUAGE];

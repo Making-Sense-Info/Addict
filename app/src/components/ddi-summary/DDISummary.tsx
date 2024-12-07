@@ -1,4 +1,4 @@
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import LaunchIcon from "@mui/icons-material/Launch";
 import {
     Table,
     TableBody,
@@ -12,15 +12,16 @@ import {
     IconButton,
     Box,
     Chip,
-    Paper
+    Paper,
+    useTheme
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { TruncatedTableCell } from "@components/common";
 
-import { getLabelFromId } from "@utils/badges";
-import { CATEGORY_SCHEME_ID, DDI_OBJECTS } from "@utils/contants";
+import { getBadgeColor, getLabelFromId } from "@utils/badges";
+import { DDI_OBJECTS } from "@utils/contants";
 
 import { DDIBaseObject } from "@model/ddi";
 import { type DDIObjectIDs } from "@model/index";
@@ -38,12 +39,9 @@ type DDISummaryProps = {
     path: string;
 };
 
-const typeColors: Record<Row["type"], any> = {
-    [CATEGORY_SCHEME_ID]: "primary"
-};
-
 const DDISummary = ({ objects, path }: DDISummaryProps) => {
     const navigate = useNavigate();
+    const { palette } = useTheme();
     const [order, setOrder] = useState<"asc" | "desc">("asc");
     const [orderBy, setOrderBy] = useState<keyof Row>("label");
     const [filterText, setFilterText] = useState("");
@@ -96,6 +94,8 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
         });
 
     const paginatedRows = filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+    const getColor = (id: DDIObjectIDs) => getBadgeColor(palette.primary.main)(id);
 
     return (
         <Paper sx={{ width: "80%", margin: "auto", marginTop: "2em" }}>
@@ -171,7 +171,7 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
                                 <TableCell sx={{ padding: 1, textAlign: "center" }}>
                                     <Chip
                                         label={getLabelFromId(row.type)}
-                                        color={typeColors[row.type]}
+                                        sx={{ backgroundColor: getColor(row.type) }}
                                     />
                                 </TableCell>
                                 <TableCell>
@@ -183,7 +183,7 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
                                             );
                                         }}
                                     >
-                                        <VisibilityIcon />
+                                        <LaunchIcon />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>

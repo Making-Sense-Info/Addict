@@ -2,6 +2,7 @@ import { CATEGORY_SCHEME_ID, CATEGORY_SCHEME_XML_PATH } from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
+import { getCategories } from "./Category";
 import { getElementURN, getLabelsByLang, getPreferedLabel } from "./common";
 
 export const getCategorySchemes = (xmlDoc: Document): DDIBaseObject[] => {
@@ -24,10 +25,12 @@ export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObj
     });
     if (!categoryScheme) throw new Error(`Unknow Category Scheme: ${id}`);
     const labels = categoryScheme.getElementsByTagName("r:Content");
+    const children = getCategories(categoryScheme);
     // TODO getCategories as child
     // TODO find parent
     return {
         URN: getElementURN(categoryScheme),
-        labels: getLabelsByLang(labels)
+        labels: getLabelsByLang(labels),
+        children
     };
 };

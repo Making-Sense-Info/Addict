@@ -9,6 +9,9 @@ import { getTitle } from "@utils/xml";
 
 import { DDIDetailledObject, DDIObjectIDs } from "@model/ddi";
 
+import Children from "./Children";
+import LinkedObject from "./LinkedObject";
+
 const langFlags: Record<string, string> = {
     "fr-FR": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",
     "en-UK": "https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg"
@@ -23,7 +26,7 @@ interface DDIObjectProps {
 const DDIObject = ({ type, object, path }: DDIObjectProps) => {
     const navigate = useNavigate();
     const title = getTitle(type);
-    const { URN, labels } = object;
+    const { URN, labels, parent, children } = object;
     return (
         <Box
             sx={{
@@ -79,6 +82,10 @@ const DDIObject = ({ type, object, path }: DDIObjectProps) => {
                     </Box>
                 ))}
             />
+            {parent && (
+                <KeyValue label={"Contained in"} values={<LinkedObject item={parent} path={path} />} />
+            )}
+            {children && <Children items={children} path={path} />}
         </Box>
     );
 };

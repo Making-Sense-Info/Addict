@@ -1,6 +1,6 @@
 import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import LaunchIcon from "@mui/icons-material/Launch";
 import { Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
@@ -93,7 +93,7 @@ const HomeTable = ({ data, path, setPath }: HomeTableProps) => {
                                             navigate(`/summary?path=${item.path}`);
                                         }}
                                     >
-                                        <VisibilityIcon />
+                                        <LaunchIcon />
                                     </IconButton>
                                 )}
                             </TableCell>
