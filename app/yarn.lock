@@ -1993,10 +1993,10 @@ typescript-eslint@^8.15.0:
     "@typescript-eslint/parser" "8.17.0"
     "@typescript-eslint/utils" "8.17.0"
 
-typescript@~5.6.2:
-  version "5.6.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.3.tgz#5f3449e31c9d94febb17de03cc081dd56d81db5b"
-  integrity sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==
+typescript@~5.7.2:
+  version "5.7.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.2.tgz#3169cf8c4c8a828cde53ba9ecb3d2b1d5dd67be6"
+  integrity sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==
 
 update-browserslist-db@^1.1.1:
   version "1.1.1"
@@ -2013,10 +2013,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-vite-envs@^4.4.6:
-  version "4.4.6"
-  resolved "https://registry.yarnpkg.com/vite-envs/-/vite-envs-4.4.6.tgz#b86fe970848021a4d9e3a97e983d14b1dd6c97ea"
-  integrity sha512-5FZSpN+SdWTEQEw9S64RXwSaz4P7MX04gt1cZ58Z2YmQokRhhz+/47+bPIJg8a6HxFM+84WpRxsk8CAkQMCZJw==
+vite-envs@^4.4.10:
+  version "4.4.10"
+  resolved "https://registry.yarnpkg.com/vite-envs/-/vite-envs-4.4.10.tgz#ded3d2669585efe09fe4f0b9960fad271435bb16"
+  integrity sha512-x2Cbud8UCIz6fO3d8e3UGot7QxXXctA6ULyzTMcn3jZkS+uedo374P/delh3lUHCnuY1Dw2MLfOcFrRzBcaFwA==
 
 vite-tsconfig-paths@^5.1.3:
   version "5.1.4"
