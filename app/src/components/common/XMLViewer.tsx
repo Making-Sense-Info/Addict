@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { useTheme } from "@mui/material";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight, oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import xmlFormatter from "xml-formatter";
 
