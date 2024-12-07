@@ -18,8 +18,8 @@ A DDI catalog tool.
 
 - [x] Category Scheme
 - [x] Category
+- [x] Variable Scheme
 - [x] Variable
-- [ ] QuestionItem
 - [ ] QuestionItem
 - [ ] CodeListScheme
 - [ ] CodeList
