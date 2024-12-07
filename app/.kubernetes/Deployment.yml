@@ -16,7 +16,7 @@ spec:
         spec:
             containers:
                 - name: addict
-                  image: makingsenseinfo/addict:0.1.0
+                  image: makingsenseinfo/addict:0.2.0
                   imagePullPolicy: IfNotPresent
                   ports:
                       - containerPort: 8080
