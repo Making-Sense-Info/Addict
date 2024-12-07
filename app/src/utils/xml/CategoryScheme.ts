@@ -26,7 +26,7 @@ export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObj
     if (!categoryScheme) throw new Error(`Unknow Category Scheme: ${id}`);
     const labels = categoryScheme.getElementsByTagName("r:Content");
     const children = getCategories(categoryScheme);
-    // TODO getCategories as child
+
     // TODO find parent
     return {
         URN: getElementURN(categoryScheme),

@@ -19,7 +19,7 @@ export const getElementURN = (e: Element): string => {
     return `${agency}:${id}:${version}`;
 };
 
-export const getElementLabel = (e: Element): string =>
+export const getElementContent = (e: Element): string =>
     getLabelsByLang(e.getElementsByTagName("r:Content"))[PREFERED_LANGUAGE];
 
 export const getCode = (e: Element): string => new XMLSerializer().serializeToString(e);
