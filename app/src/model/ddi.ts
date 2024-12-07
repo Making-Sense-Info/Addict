@@ -14,4 +14,5 @@ export type DDIDetailledObject = {
     labels: Record<string, string>;
     parent?: DDIBaseObject;
     children?: DDIBaseObject[];
+    code?: string;
 };

@@ -3,7 +3,7 @@ import { CATEGORY_SCHEME_ID, CATEGORY_SCHEME_XML_PATH } from "@utils/contants";
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
 import { getCategories } from "./Category";
-import { getElementURN, getLabelsByLang, getPreferedLabel } from "./common";
+import { getCode, getElementURN, getLabelsByLang, getPreferedLabel } from "./common";
 
 export const getCategorySchemes = (xmlDoc: Document): DDIBaseObject[] => {
     const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_XML_PATH);
@@ -31,6 +31,7 @@ export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObj
     return {
         URN: getElementURN(categoryScheme),
         labels: getLabelsByLang(labels),
-        children
+        children,
+        code: getCode(categoryScheme)
     };
 };

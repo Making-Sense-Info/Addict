@@ -4,6 +4,7 @@ import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import { KeyValue } from "@components/common";
+import XMLViewer from "@components/common/XMLViewer";
 
 import { getTitle } from "@utils/xml";
 
@@ -26,7 +27,7 @@ interface DDIObjectProps {
 const DDIObject = ({ type, object, path }: DDIObjectProps) => {
     const navigate = useNavigate();
     const title = getTitle(type);
-    const { URN, labels, parent, children } = object;
+    const { URN, labels, parent, children, code } = object;
     return (
         <Box
             sx={{
@@ -86,6 +87,7 @@ const DDIObject = ({ type, object, path }: DDIObjectProps) => {
                 <KeyValue label={"Contained in"} values={<LinkedObject item={parent} path={path} />} />
             )}
             {children && <Children items={children} path={path} />}
+            {code && <KeyValue label={"DDI"} values={<XMLViewer xmlCode={code} />} />}
         </Box>
     );
 };

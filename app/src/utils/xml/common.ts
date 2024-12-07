@@ -21,3 +21,5 @@ export const getElementURN = (e: Element): string => {
 
 export const getElementLabel = (e: Element): string =>
     getLabelsByLang(e.getElementsByTagName("r:Content"))[PREFERED_LANGUAGE];
+
+export const getCode = (e: Element): string => new XMLSerializer().serializeToString(e);
