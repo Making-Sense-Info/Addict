@@ -4,6 +4,7 @@
     "license": "MIT",
     "type": "module",
     "scripts": {
+        "postinstall": "vite-envs update-types",
         "dev": "vite",
         "build": "tsc -b && vite build",
         "lint": "eslint .",
