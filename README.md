@@ -11,3 +11,23 @@ A DDI catalog tool.
 ## Application
 
 [Source code](./app/README.md)
+
+## Addict DDI support
+
+### DDI object list
+
+- [x] Category Scheme
+- [x] Category
+- [x] Variable
+- [ ] QuestionItem
+- [ ] QuestionItem
+- [ ] CodeListScheme
+- [ ] CodeList
+
+### DDI object links
+
+- Category Scheme:
+    - [x] `Contains` Category
+- Category:
+    - [x] `Contained by` Category Scheme
+- TODO
