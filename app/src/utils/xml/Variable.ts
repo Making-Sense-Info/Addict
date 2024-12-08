@@ -26,10 +26,8 @@ export const getVariable = (xmlDoc: Document, id: string): DDIDetailledObject =>
     const labels = variable.querySelectorAll(":scope > Label > Content");
 
     const variableScheme = variable.closest("VariableScheme") as Element;
-    console.log(variableScheme);
     const parentURN = getElementURN(variableScheme);
     const parentLabel = getElementContent(variableScheme);
-    console.log(parentLabel);
 
     return {
         URN: getElementURN(variable),
