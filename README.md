@@ -14,34 +14,80 @@ A DDI catalog tool.
 
 ## Addict DDI support
 
-### DDI object list
+```mermaid
+classDiagram
 
-- [x] Category
-- [x] Category Scheme
-- [X] Code
-- [X] CodeList
-- [X] CodeListScheme
-- [ ] QuestionItem
-- [ ] Questionnaire
-- [x] Variable
-- [x] Variable Scheme
+class DDIInstance {
+URN
+label
+}
+class QuestionScheme {
+URN
+label
+}
+class QuestionItem {
+URN
+label
+}
+class CodeListScheme {
+URN
+label
+}
+class CodeList {
+URN
+label
+}
+class Code {
+URN
+value
+}
+class VariableScheme {
+URN
+label
+}
+class Variable {
+URN
+label
+}
+class CategoryScheme {
+URN
+label
+}
+class Category {
+URN
+label
+}
 
-### DDI object links
+DDIInstance --> "*"  QuestionScheme : contains
+QuestionScheme --> "*" DDIInstance  : containedIn
 
-- Category Scheme:
-    - [x] `Contains` Category
-- Category:
-    - [x] `Contained by` Category Scheme
-- Variable Scheme:
-    - [x] `Contains` Variable
-- Variable:
-    - [x] `Contained by` Variable Scheme
-- Code list Scheme:
-    - [x] `Contains` Code list
-- Code list:
-    - [x] `Contained by` Code list Scheme
-- Code list:
-    - [x] `Contains` Code
-- Code:
-    - [x] `Contained by` Code list
-- TODO
+DDIInstance --> "*" CodeListScheme : contains
+CodeListScheme --> "*" DDIInstance  : containedIn
+
+DDIInstance --> "*" VariableScheme : contains
+VariableScheme --> "*" DDIInstance  : containedIn
+
+DDIInstance --> "*" CategoryScheme : contains
+CategoryScheme --> "*" DDIInstance  : containedIn
+
+QuestionScheme --> "*"  QuestionItem : contains
+QuestionItem --> "*"  QuestionScheme : containedIn
+
+CodeListScheme --> "*" CodeList : contains
+CodeList --> "*" CodeListScheme : containedIn
+
+CodeList --> "*" Code : contains
+Code --> "*" CodeList : containedIn
+
+VariableScheme --> "*" Variable : contains
+Variable --> "*" VariableScheme : containedIn
+
+CategoryScheme --> "*" Category : contains
+Category --> "*" CategoryScheme : containedIn
+
+CodeList "*" <-- QuestionItem : uses
+QuestionItem "*" <-- CodeList : usedIn
+
+Category "*" <-- Code : uses
+Code "*" <-- Category : usedIn
+```
