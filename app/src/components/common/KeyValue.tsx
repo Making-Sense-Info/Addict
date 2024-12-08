@@ -20,7 +20,10 @@ const KeyValueBox: React.FC<KeyValueBoxProps> = ({ label, values }) => {
                 boxShadow: 1,
                 display: "flex",
                 flexDirection: "column",
-                gap: 2
+                gap: 2,
+                position: "relative",
+                maxHeight: "300px",
+                overflowY: "auto"
             }}
         >
             <Typography
@@ -35,8 +38,18 @@ const KeyValueBox: React.FC<KeyValueBoxProps> = ({ label, values }) => {
             </Typography>
             <Box
                 sx={{
-                    maxHeight: "300px",
-                    overflowY: "auto"
+                    overflowY: "auto",
+                    maxHeight: "100%",
+                    "&::-webkit-scrollbar": {
+                        width: "8px"
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: "rgba(0, 0, 0, 0.2)",
+                        borderRadius: "4px"
+                    },
+                    "&::-webkit-scrollbar-track": {
+                        backgroundColor: "rgba(0, 0, 0, 0.1)"
+                    }
                 }}
             >
                 {isList ? (
