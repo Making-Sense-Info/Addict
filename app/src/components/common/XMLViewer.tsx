@@ -13,6 +13,14 @@ type XMLViewerProps = {
 
 const MAX_LINES = 100;
 
+const getFormattedXML = (s: string) => {
+    try {
+        return xmlFormatter(s, { indentation: "    " });
+    } catch (_) {
+        return "";
+    }
+};
+
 const XMLViewer = ({ xmlCode }: XMLViewerProps) => {
     const theme = useTheme();
     const syntaxStyle = theme.palette.mode === "dark" ? oneDark : oneLight;
@@ -21,7 +29,7 @@ const XMLViewer = ({ xmlCode }: XMLViewerProps) => {
     const lines = xmlCode.split("\n");
     const totalLines = lines.length;
 
-    let displayedCode = xmlCode;
+    let displayedCode = getFormattedXML(xmlCode);
 
     if (totalLines > MAX_LINES) {
         const startLines = lines.slice(0, MAX_LINES / 2).join("\n");
@@ -29,10 +37,8 @@ const XMLViewer = ({ xmlCode }: XMLViewerProps) => {
         displayedCode = `${startLines}\n\n[...]\n\n${endLines}`;
     }
 
-    const formattedXML = xmlFormatter(displayedCode, { indentation: "    " });
-
     const handleCopy = () => {
-        navigator.clipboard.writeText(xmlFormatter(xmlCode, { indentation: "    " }));
+        navigator.clipboard.writeText(getFormattedXML(xml));
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -75,7 +81,7 @@ const XMLViewer = ({ xmlCode }: XMLViewerProps) => {
                     padding: "1rem"
                 }}
             >
-                {formattedXML}
+                {displayedCode}
             </SyntaxHighlighter>
         </Box>
     );

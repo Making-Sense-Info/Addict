@@ -97,7 +97,7 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
     const getColor = (id: DDIObjectIDs) => getBadgeColor(palette.primary.main)(id);
 
     return (
-        <Paper sx={{ width: "80%", margin: "auto", marginTop: "2em" }}>
+        <Paper sx={{ width: "80%", margin: "auto", marginTop: "2em", marginBottom: "10px" }}>
             <Box sx={{ display: "flex", justifyContent: "center", margin: "16px" }}>
                 <TextField
                     label="Search"

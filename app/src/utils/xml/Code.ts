@@ -2,6 +2,7 @@ import { CODE_ID, CODE_LIST_ID, CODE_XML_PATH } from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
+import { getCategories } from "./Category";
 import { getXMLCode, getElementContent, getElementURN } from "./common";
 
 export const getCodes = (xmlDoc: Document | Element): DDIBaseObject[] => {
@@ -29,13 +30,19 @@ export const getCode = (xmlDoc: Document, id: string): DDIDetailledObject => {
     const containedInURN = getElementURN(codeList);
     const containedInLabel = getElementContent(codeList);
 
-    // TODO: add value
-    // TODO: add CategoryReference
+    const categoryReferencesURN = Array.from(code.querySelectorAll(":scope > CategoryReference")).map(
+        c => getElementURN(c)
+    );
+
+    const categoryReferences = getCategories(xmlDoc).filter(({ URN }) =>
+        categoryReferencesURN.includes(URN)
+    );
 
     return {
         URN: getElementURN(code),
         value,
         containedIn: { type: CODE_LIST_ID, URN: containedInURN, label: containedInLabel },
+        uses: categoryReferences,
         code: getXMLCode(code)
     };
 };

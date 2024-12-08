@@ -1,4 +1,10 @@
-import { CODE_LIST_ID, CODE_LIST_SCHEME_ID, CODE_LIST_XML_PATH } from "@utils/contants";
+import {
+    CODE_LIST_ID,
+    CODE_LIST_SCHEME_ID,
+    CODE_LIST_XML_PATH,
+    QUESTION_ITEM_ID,
+    QUESTION_ITEM_XML_PATH
+} from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
@@ -38,11 +44,32 @@ export const getCodeList = (xmlDoc: Document, id: string): DDIDetailledObject =>
     const containedInURN = getElementURN(codeListScheme);
     const containedInLabel = getElementContent(codeListScheme);
 
+    // TODO: extract? share? refacto?
+    const codeListURN = getElementURN(codeList);
+    const questionItemsUses: DDIBaseObject[] = Array.from(
+        xmlDoc.getElementsByTagName(QUESTION_ITEM_XML_PATH)
+    )
+        .reduce((acc, q) => {
+            const codeListReferences = q.querySelectorAll("CodeListReference");
+            const cl = Array.from(codeListReferences).filter(c => getElementURN(c) === codeListURN);
+            if (cl.length > 0) return [...acc, q];
+            return acc;
+        }, [] as Element[])
+        .map(q => {
+            const labels = q.querySelectorAll(":scope > QuestionItemName > String");
+            return {
+                URN: getElementURN(q),
+                label: getPreferedLabel(getLabelsByLang(labels)),
+                type: QUESTION_ITEM_ID
+            };
+        });
+
     return {
-        URN: getElementURN(codeList),
+        URN: codeListURN,
         labels: getLabelsByLang(labels),
         contains,
         containedIn: { type: CODE_LIST_SCHEME_ID, URN: containedInURN, label: containedInLabel },
+        usedIn: questionItemsUses,
         code: getXMLCode(codeList)
     };
 };

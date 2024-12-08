@@ -1,4 +1,10 @@
-import { CATEGORY_ID, CATEGORY_XML_PATH, CATEGORY_SCHEME_ID } from "@utils/contants";
+import {
+    CATEGORY_ID,
+    CATEGORY_XML_PATH,
+    CATEGORY_SCHEME_ID,
+    CODE_ID,
+    CODE_XML_PATH
+} from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
@@ -35,10 +41,29 @@ export const getCategory = (xmlDoc: Document, id: string): DDIDetailledObject =>
     const containedInURN = getElementURN(categoryScheme);
     const containedInLabel = getElementContent(categoryScheme);
 
+    // TODO: extract? share? refacto?
+    const categoryURN = getElementURN(category);
+    const codeUses: DDIBaseObject[] = Array.from(xmlDoc.getElementsByTagName(CODE_XML_PATH))
+        .reduce((acc, q) => {
+            const categoryReferences = q.querySelectorAll("CategoryReference");
+            const cr = Array.from(categoryReferences).filter(c => getElementURN(c) === categoryURN);
+            if (cr.length > 0) return [...acc, q];
+            return acc;
+        }, [] as Element[])
+        .map(q => {
+            const labels = q.querySelectorAll(":scope > Value");
+            return {
+                URN: getElementURN(q),
+                label: getPreferedLabel(getLabelsByLang(labels)),
+                type: CODE_ID
+            };
+        });
+
     return {
-        URN: getElementURN(category),
+        URN: categoryURN,
         labels: getLabelsByLang(labels),
         containedIn: { type: CATEGORY_SCHEME_ID, URN: containedInURN, label: containedInLabel },
+        usedIn: codeUses,
         code: getXMLCode(category)
     };
 };

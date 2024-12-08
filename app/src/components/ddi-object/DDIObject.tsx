@@ -10,7 +10,7 @@ import { getTitle } from "@utils/xml";
 
 import { DDIDetailledObject, DDIObjectIDs } from "@model/ddi";
 
-import Children from "../common/KeyValueList";
+import KeyValueList from "../common/KeyValueList";
 import LinkedObject from "./LinkedObject";
 
 const langFlags: Record<string, string> = {
@@ -27,7 +27,7 @@ interface DDIObjectProps {
 const DDIObject = ({ type, object, path }: DDIObjectProps) => {
     const navigate = useNavigate();
     const title = getTitle(type);
-    const { URN, labels, containedIn, contains, code, value } = object;
+    const { URN, labels, questionTexts, containedIn, contains, uses, usedIn, code, value } = object;
     return (
         <Box
             sx={{
@@ -36,7 +36,8 @@ const DDIObject = ({ type, object, path }: DDIObjectProps) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
-                marginTop: "20px"
+                marginTop: "20px",
+                marginBottom: "10px"
             }}
         >
             <Box
@@ -61,7 +62,7 @@ const DDIObject = ({ type, object, path }: DDIObjectProps) => {
                     {title}
                 </Typography>
             </Box>
-            <KeyValue label={"URN"} values={URN} />
+            <KeyValue label={"URN"} values={<Typography variant="body1">{URN}</Typography>} />
             {labels && (
                 <KeyValue
                     label={"Label"}
@@ -82,9 +83,36 @@ const DDIObject = ({ type, object, path }: DDIObjectProps) => {
                                     sx={{ width: 32, height: 32, borderRadius: "50%" }}
                                 />
                             ) : (
-                                <Typography variant="body1">{lang}:</Typography>
+                                <Typography variant="body1">{lang ? `${lang}:` : ""}</Typography>
                             )}
                             <Typography variant="body1">{label}</Typography>
+                        </Box>
+                    ))}
+                />
+            )}
+            {questionTexts && (
+                <KeyValue
+                    label={"Question"}
+                    values={Object.entries(questionTexts).map(([lang, text]) => (
+                        <Box
+                            key={lang}
+                            sx={{
+                                display: "flex",
+                                gap: 2,
+                                padding: 1,
+                                alignItems: "center"
+                            }}
+                        >
+                            {langFlags[lang] ? (
+                                <Avatar
+                                    src={langFlags[lang]}
+                                    alt={lang}
+                                    sx={{ width: 32, height: 32, borderRadius: "50%" }}
+                                />
+                            ) : (
+                                <Typography variant="body1">{lang ? `${lang}:` : ""}</Typography>
+                            )}
+                            <Typography variant="body1">{text}</Typography>
                         </Box>
                     ))}
                 />
@@ -96,7 +124,13 @@ const DDIObject = ({ type, object, path }: DDIObjectProps) => {
                     values={<LinkedObject item={containedIn} path={path} />}
                 />
             )}
-            {contains && <Children items={contains} path={path} />}
+            {contains && contains.length > 0 && (
+                <KeyValueList rowLabel="Contains" items={contains} path={path} />
+            )}
+            {usedIn && usedIn.length > 0 && (
+                <KeyValueList rowLabel="Used in" items={usedIn} path={path} />
+            )}
+            {uses && uses.length > 0 && <KeyValueList rowLabel="Uses" items={uses} path={path} />}
             {code && <KeyValue label={"DDI"} values={<XMLViewer xmlCode={code} />} />}
         </Box>
     );

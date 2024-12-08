@@ -8,7 +8,7 @@ import NotFound from "@components/not-found";
 import { getContent } from "@api/file-content";
 
 import { getResourcesUrl } from "@utils/env";
-import { getDDIObject, getTitle } from "@utils/xml";
+import { getDDIObject } from "@utils/xml";
 
 import { DDIObjectIDs } from "@model/index";
 

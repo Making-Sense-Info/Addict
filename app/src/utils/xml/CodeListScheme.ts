@@ -1,11 +1,17 @@
-import { CODE_LIST_SCHEME_ID, CODE_LIST_SCHEME_XML_PATH } from "@utils/contants";
+import { CODE_LIST_SCHEME_ID, CODE_LIST_SCHEME_XML_PATH, DDI_INSTANCE_ID } from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
 import { getCodeLists } from "./CodeList";
-import { getXMLCode, getElementURN, getLabelsByLang, getPreferedLabel } from "./common";
+import {
+    getXMLCode,
+    getElementURN,
+    getLabelsByLang,
+    getPreferedLabel,
+    getElementContent
+} from "./common";
 
-export const getCodeListSchemes = (xmlDoc: Document): DDIBaseObject[] => {
+export const getCodeListSchemes = (xmlDoc: Document | Element): DDIBaseObject[] => {
     const codeListSchemes = xmlDoc.getElementsByTagName(CODE_LIST_SCHEME_XML_PATH);
     return Array.from(codeListSchemes).map(c => {
         const labels = c.querySelectorAll(":scope > CodeListSchemeName > String");
@@ -18,21 +24,25 @@ export const getCodeListSchemes = (xmlDoc: Document): DDIBaseObject[] => {
 };
 
 export const getCodeListScheme = (xmlDoc: Document, id: string): DDIDetailledObject => {
-    const codeLists = xmlDoc.getElementsByTagName(CODE_LIST_SCHEME_XML_PATH);
-    const codeList = Array.from(codeLists).find(c => {
+    const codeListSchemes = xmlDoc.getElementsByTagName(CODE_LIST_SCHEME_XML_PATH);
+    const codeListScheme = Array.from(codeListSchemes).find(c => {
         const foundId = c.querySelector("ID")?.textContent;
         return id === foundId;
     });
-    if (!codeList) throw new Error(`Unknow Code list Scheme: ${id}`);
+    if (!codeListScheme) throw new Error(`Unknow Code list Scheme: ${id}`);
 
-    const labels = codeList.querySelectorAll(":scope > CodeListSchemeName > String");
-    const contains = getCodeLists(codeList);
+    const labels = codeListScheme.querySelectorAll(":scope > CodeListSchemeName > String");
+    const contains = getCodeLists(codeListScheme);
 
-    // TODO find parent
+    const ddiInstance = codeListScheme.closest("DDIInstance") as Element;
+    const containedInURN = getElementURN(ddiInstance);
+    const containedInLabel = getElementContent(ddiInstance);
+
     return {
-        URN: getElementURN(codeList),
+        URN: getElementURN(codeListScheme),
         labels: getLabelsByLang(labels),
         contains,
-        code: getXMLCode(codeList)
+        containedIn: { type: DDI_INSTANCE_ID, URN: containedInURN, label: containedInLabel },
+        code: getXMLCode(codeListScheme)
     };
 };
