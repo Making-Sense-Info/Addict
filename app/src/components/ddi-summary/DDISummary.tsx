@@ -1,3 +1,4 @@
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import LaunchIcon from "@mui/icons-material/Launch";
 import {
     Table,
@@ -166,7 +167,13 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
                     </TableHead>
                     <TableBody>
                         {paginatedRows.map(row => (
-                            <TableRow key={row.URN}>
+                            <TableRow
+                                key={row.URN}
+                                onClick={() => {
+                                    navigate(`/${row.type}/${row.URN.split(":")[1]}?path=${path}`);
+                                }}
+                                hover={true}
+                            >
                                 <TruncatedTableCell maxWidth={200}>{row.URN}</TruncatedTableCell>
                                 <TruncatedTableCell maxWidth={200}>{row.label}</TruncatedTableCell>
                                 <TableCell sx={{ padding: 1, textAlign: "center" }}>
@@ -176,15 +183,8 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
                                     />
                                 </TableCell>
                                 <TableCell>
-                                    <IconButton
-                                        color="primary"
-                                        onClick={() => {
-                                            navigate(
-                                                `/${row.type}/${row.URN.split(":")[1]}?path=${path}`
-                                            );
-                                        }}
-                                    >
-                                        <LaunchIcon />
+                                    <IconButton color="primary">
+                                        <ContentCopyIcon />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
