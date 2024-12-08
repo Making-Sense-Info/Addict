@@ -1,5 +1,8 @@
 // @ts-nocheck
-import { useTheme } from "@mui/material";
+import DoneIcon from "@mui/icons-material/Done";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import { useTheme, Box, IconButton, Tooltip } from "@mui/material";
+import { useState } from "react";
 import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight, oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import xmlFormatter from "xml-formatter";
@@ -13,6 +16,7 @@ const MAX_LINES = 100;
 const XMLViewer = ({ xmlCode }: XMLViewerProps) => {
     const theme = useTheme();
     const syntaxStyle = theme.palette.mode === "dark" ? oneDark : oneLight;
+    const [copied, setCopied] = useState(false);
 
     const lines = xmlCode.split("\n");
     const totalLines = lines.length;
@@ -27,17 +31,53 @@ const XMLViewer = ({ xmlCode }: XMLViewerProps) => {
 
     const formattedXML = xmlFormatter(displayedCode, { indentation: "    " });
 
+    const handleCopy = () => {
+        navigator.clipboard.writeText(xmlFormatter(xmlCode, { indentation: "    " }));
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     return (
-        <SyntaxHighlighter
-            language="xml"
-            style={syntaxStyle}
-            showLineNumbers
-            customStyle={{
-                fontSize: "0.9rem"
+        <Box
+            sx={{
+                position: "relative",
+                // border: "1px solid",
+                borderColor: "divider",
+                borderRadius: 2,
+                overflow: "hidden"
             }}
         >
-            {formattedXML}
-        </SyntaxHighlighter>
+            {/* Copy Button */}
+            <Tooltip title={copied ? "Copied!" : "Copy"}>
+                <IconButton
+                    size="small"
+                    onClick={handleCopy}
+                    sx={{
+                        position: "absolute",
+                        top: 8,
+                        right: 8,
+                        zIndex: 1,
+                        backgroundColor: "background.paper",
+                        "&:hover": { backgroundColor: "grey.100" }
+                    }}
+                >
+                    {copied ? <DoneIcon fontSize="small" /> : <FileCopyIcon fontSize="small" />}
+                </IconButton>
+            </Tooltip>
+
+            {/* XML Viewer */}
+            <SyntaxHighlighter
+                language="xml"
+                style={syntaxStyle}
+                showLineNumbers
+                customStyle={{
+                    fontSize: "0.9rem",
+                    padding: "1rem"
+                }}
+            >
+                {formattedXML}
+            </SyntaxHighlighter>
+        </Box>
     );
 };
 

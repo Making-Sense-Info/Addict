@@ -33,33 +33,40 @@ const KeyValueBox: React.FC<KeyValueBoxProps> = ({ label, values }) => {
             >
                 {label}
             </Typography>
-            {isList ? (
-                <List sx={{ pl: 2 }}>
-                    {values.map((value, index) =>
-                        value ? (
-                            <ListItem key={index} disablePadding>
-                                <ListItemText
-                                    primary={value}
-                                    primaryTypographyProps={{
-                                        variant: "body2",
-                                        sx: { color: "text.primary" }
-                                    }}
-                                />
-                            </ListItem>
-                        ) : null
-                    )}
-                </List>
-            ) : values ? (
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: "text.primary",
-                        pl: 2
-                    }}
-                >
-                    {values}
-                </Typography>
-            ) : null}
+            <Box
+                sx={{
+                    maxHeight: "300px",
+                    overflowY: "auto"
+                }}
+            >
+                {isList ? (
+                    <List sx={{ pl: 2 }}>
+                        {values.map((value, index) =>
+                            value ? (
+                                <ListItem key={index} disablePadding>
+                                    <ListItemText
+                                        primary={value}
+                                        primaryTypographyProps={{
+                                            variant: "body2",
+                                            sx: { color: "text.primary" }
+                                        }}
+                                    />
+                                </ListItem>
+                            ) : null
+                        )}
+                    </List>
+                ) : values ? (
+                    <Typography
+                        variant="body2"
+                        sx={{
+                            color: "text.primary",
+                            pl: 2
+                        }}
+                    >
+                        {values}
+                    </Typography>
+                ) : null}
+            </Box>
         </Box>
     );
 };
