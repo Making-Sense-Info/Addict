@@ -118,7 +118,7 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
                                 sx={{
                                     textAlign: "center",
                                     fontWeight: "bold",
-                                    width: "30%"
+                                    width: "35%"
                                 }}
                             >
                                 <TableSortLabel
@@ -162,33 +162,31 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
                                     />
                                 </Box>
                             </TableCell>
-                            <TableCell sx={{ width: "5%" }} />
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {paginatedRows.map(row => (
-                            <TableRow
-                                key={row.URN}
-                                onClick={() => {
-                                    navigate(`/${row.type}/${row.URN.split(":")[1]}?path=${path}`);
-                                }}
-                                hover={true}
-                            >
-                                <TruncatedTableCell maxWidth={200}>{row.URN}</TruncatedTableCell>
-                                <TruncatedTableCell maxWidth={200}>{row.label}</TruncatedTableCell>
-                                <TableCell sx={{ padding: 1, textAlign: "center" }}>
-                                    <Chip
-                                        label={getTitle(row.type)}
-                                        sx={{ backgroundColor: getColor(row.type) }}
-                                    />
-                                </TableCell>
-                                <TableCell>
-                                    <IconButton color="primary">
-                                        <ContentCopyIcon />
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                        {paginatedRows.map(row => {
+                            const handleClick = (event: React.MouseEvent): void => {
+                                if (window.getSelection()?.toString()) {
+                                    event.stopPropagation();
+                                    event.preventDefault();
+                                    return;
+                                }
+                                navigate(`/${row.type}/${row.URN.split(":")[1]}?path=${path}`);
+                            };
+                            return (
+                                <TableRow key={row.URN} onClick={handleClick} hover={true}>
+                                    <TruncatedTableCell maxWidth={200}>{row.URN}</TruncatedTableCell>
+                                    <TruncatedTableCell maxWidth={200}>{row.label}</TruncatedTableCell>
+                                    <TableCell sx={{ padding: 1, textAlign: "center" }}>
+                                        <Chip
+                                            label={getTitle(row.type)}
+                                            sx={{ backgroundColor: getColor(row.type) }}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
                     </TableBody>
                 </Table>
             </TableContainer>
