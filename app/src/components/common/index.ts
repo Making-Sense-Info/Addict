@@ -1,5 +1,6 @@
 export { default as Breadcrumb } from "./Breadcrumb";
 export { default as Error } from "./Error";
+export { default as Footer } from "./Footer";
 export { default as KeyValue } from "./KeyValue";
 export { default as Loader } from "./Loader";
 export { default as TopBar } from "./TopBar";

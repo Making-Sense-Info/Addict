@@ -23,7 +23,8 @@ const KeyValueBox: React.FC<KeyValueBoxProps> = ({ label, values }) => {
                 gap: 2,
                 position: "relative",
                 maxHeight: "300px",
-                overflowY: "auto"
+                overflowY: "auto",
+                marginBottom: "10px"
             }}
         >
             <Typography
