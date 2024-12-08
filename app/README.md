@@ -20,10 +20,11 @@ yarn build
 
 ```
 docker build -t . addict
+docker run 80:8080 addict -e GITHUB_TOKEN=...
 ```
 
 ### Dockerhub
 
 ```
-docker run 80:8080 makingsenseinfo/addict:latest
+docker run 80:8080 makingsenseinfo/addict:latest -e GITHUB_TOKEN=...
 ```
