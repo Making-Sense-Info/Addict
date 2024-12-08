@@ -1,8 +1,6 @@
 import { PREFERED_LANGUAGE } from "@utils/env";
 
-export const getLabelsByLang = (
-    labels: HTMLCollectionOf<Element> | NodeListOf<Element>
-): Record<string, string> =>
+export const getLabelsByLang = (labels: NodeListOf<Element>): Record<string, string> =>
     Array.from(labels).reduce((acc, l) => {
         const lang = l.getAttribute("xml:lang") as string;
         const content = l.textContent?.trim() || "";
@@ -22,6 +20,6 @@ export const getElementURN = (e: Element): string => {
 };
 
 export const getElementContent = (e: Element): string =>
-    getLabelsByLang(e.getElementsByTagName("r:Content"))[PREFERED_LANGUAGE];
+    getLabelsByLang(e.querySelectorAll(":scope > Label > Content"))[PREFERED_LANGUAGE];
 
 export const getCode = (e: Element): string => new XMLSerializer().serializeToString(e);

@@ -26,7 +26,6 @@ export const getVariableScheme = (xmlDoc: Document, id: string): DDIDetailledObj
     if (!variableScheme) throw new Error(`Unknow Variable Scheme: ${id}`);
     const labels = variableScheme.querySelectorAll(":scope > Label > Content");
     const children = getVariables(variableScheme);
-
     // TODO find parent
     return {
         URN: getElementURN(variableScheme),
