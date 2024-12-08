@@ -1,25 +1,22 @@
-import {
-    CATEGORY_SCHEME_ID,
-    CATEGORY_ID,
-    CATEGORY_LABEL,
-    CATEGORY_SCHEME_LABEL,
-    VARIABLE_ID,
-    VARIABLE_LABEL,
-    VARIABLE_SCHEME_ID,
-    VARIABLE_SCHEME_LABEL
-} from "@utils/contants";
+import * as C from "@utils/contants";
 
 export type DDIObjectIDs =
-    | typeof CATEGORY_SCHEME_ID
-    | typeof CATEGORY_ID
-    | typeof VARIABLE_SCHEME_ID
-    | typeof VARIABLE_ID;
+    | typeof C.CATEGORY_SCHEME_ID
+    | typeof C.CATEGORY_ID
+    | typeof C.VARIABLE_SCHEME_ID
+    | typeof C.VARIABLE_ID
+    | typeof C.CODE_LIST_SCHEME_ID
+    | typeof C.CODE_LIST_ID
+    | typeof C.CODE_ID;
 
 export type DDIObjectLabels =
-    | typeof CATEGORY_SCHEME_LABEL
-    | typeof CATEGORY_LABEL
-    | typeof VARIABLE_SCHEME_LABEL
-    | typeof VARIABLE_LABEL;
+    | typeof C.CATEGORY_SCHEME_LABEL
+    | typeof C.CATEGORY_LABEL
+    | typeof C.VARIABLE_SCHEME_LABEL
+    | typeof C.VARIABLE_LABEL
+    | typeof C.CODE_LIST_SCHEME_LABEL
+    | typeof C.CODE_LIST_LABEL
+    | typeof C.CODE_LABEL;
 
 export type DDIBaseObject = {
     URN: string;
@@ -29,8 +26,9 @@ export type DDIBaseObject = {
 
 export type DDIDetailledObject = {
     URN: string;
-    labels: Record<string, string>;
-    parent?: DDIBaseObject;
-    children?: DDIBaseObject[];
+    labels?: Record<string, string>;
+    value?: string;
+    containedIn?: DDIBaseObject;
+    contains?: DDIBaseObject[];
     code?: string;
 };

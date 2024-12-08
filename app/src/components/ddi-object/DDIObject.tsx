@@ -10,7 +10,7 @@ import { getTitle } from "@utils/xml";
 
 import { DDIDetailledObject, DDIObjectIDs } from "@model/ddi";
 
-import Children from "./Children";
+import Children from "../common/KeyValueList";
 import LinkedObject from "./LinkedObject";
 
 const langFlags: Record<string, string> = {
@@ -27,7 +27,7 @@ interface DDIObjectProps {
 const DDIObject = ({ type, object, path }: DDIObjectProps) => {
     const navigate = useNavigate();
     const title = getTitle(type);
-    const { URN, labels, parent, children, code } = object;
+    const { URN, labels, containedIn, contains, code, value } = object;
     return (
         <Box
             sx={{
@@ -62,31 +62,41 @@ const DDIObject = ({ type, object, path }: DDIObjectProps) => {
                 </Typography>
             </Box>
             <KeyValue label={"URN"} values={URN} />
-            <KeyValue
-                label={"Label"}
-                values={Object.entries(labels).map(([lang, label]) => (
-                    <Box
-                        key={lang}
-                        sx={{
-                            display: "flex",
-                            gap: 2,
-                            padding: 1,
-                            alignItems: "center"
-                        }}
-                    >
-                        <Avatar
-                            src={langFlags[lang]}
-                            alt={lang}
-                            sx={{ width: 32, height: 32, borderRadius: "50%" }}
-                        />
-                        <Typography variant="body1">{label}</Typography>
-                    </Box>
-                ))}
-            />
-            {parent && (
-                <KeyValue label={"Contained in"} values={<LinkedObject item={parent} path={path} />} />
+            {labels && (
+                <KeyValue
+                    label={"Label"}
+                    values={Object.entries(labels).map(([lang, label]) => (
+                        <Box
+                            key={lang}
+                            sx={{
+                                display: "flex",
+                                gap: 2,
+                                padding: 1,
+                                alignItems: "center"
+                            }}
+                        >
+                            {langFlags[lang] ? (
+                                <Avatar
+                                    src={langFlags[lang]}
+                                    alt={lang}
+                                    sx={{ width: 32, height: 32, borderRadius: "50%" }}
+                                />
+                            ) : (
+                                <Typography variant="body1">{lang}:</Typography>
+                            )}
+                            <Typography variant="body1">{label}</Typography>
+                        </Box>
+                    ))}
+                />
             )}
-            {children && <Children items={children} path={path} />}
+            {value && <KeyValue label={"Value"} values={value} />}
+            {containedIn && (
+                <KeyValue
+                    label={"Contained in"}
+                    values={<LinkedObject item={containedIn} path={path} />}
+                />
+            )}
+            {contains && <Children items={contains} path={path} />}
             {code && <KeyValue label={"DDI"} values={<XMLViewer xmlCode={code} />} />}
         </Box>
     );

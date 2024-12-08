@@ -3,7 +3,7 @@ import { CATEGORY_SCHEME_ID, CATEGORY_SCHEME_XML_PATH } from "@utils/contants";
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
 import { getCategories } from "./Category";
-import { getCode, getElementURN, getLabelsByLang, getPreferedLabel } from "./common";
+import { getXMLCode, getElementURN, getLabelsByLang, getPreferedLabel } from "./common";
 
 export const getCategorySchemes = (xmlDoc: Document): DDIBaseObject[] => {
     const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_XML_PATH);
@@ -26,13 +26,13 @@ export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObj
     if (!categoryScheme) throw new Error(`Unknow Category Scheme: ${id}`);
 
     const labels = categoryScheme.querySelectorAll(":scope > Label > Content");
-    const children = getCategories(categoryScheme);
+    const contains = getCategories(categoryScheme);
 
     // TODO find parent
     return {
         URN: getElementURN(categoryScheme),
         labels: getLabelsByLang(labels),
-        children,
-        code: getCode(categoryScheme)
+        contains,
+        code: getXMLCode(categoryScheme)
     };
 };

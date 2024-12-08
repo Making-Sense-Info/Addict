@@ -16,13 +16,15 @@ A DDI catalog tool.
 
 ### DDI object list
 
-- [x] Category Scheme
 - [x] Category
-- [x] Variable Scheme
-- [x] Variable
+- [x] Category Scheme
+- [X] Code
+- [X] CodeList
+- [X] CodeListScheme
 - [ ] QuestionItem
-- [ ] CodeListScheme
-- [ ] CodeList
+- [ ] Questionnaire
+- [x] Variable
+- [x] Variable Scheme
 
 ### DDI object links
 
@@ -34,4 +36,12 @@ A DDI catalog tool.
     - [x] `Contains` Variable
 - Variable:
     - [x] `Contained by` Variable Scheme
+- Code list Scheme:
+    - [x] `Contains` Code list
+- Code list:
+    - [x] `Contained by` Code list Scheme
+- Code list:
+    - [x] `Contains` Code
+- Code:
+    - [x] `Contained by` Code list
 - TODO

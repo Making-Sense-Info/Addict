@@ -9,7 +9,9 @@ export const getLabelsByLang = (labels: NodeListOf<Element>): Record<string, str
 
 export const getPreferedLabel = (labels: Record<string, string>): string => {
     if (PREFERED_LANGUAGE in labels) return labels[PREFERED_LANGUAGE];
-    return "";
+    // fallback, return first one
+    const values = Object.values(labels);
+    return values.length > 0 ? values[0] : "no label";
 };
 
 export const getElementURN = (e: Element): string => {
@@ -22,4 +24,4 @@ export const getElementURN = (e: Element): string => {
 export const getElementContent = (e: Element): string =>
     getLabelsByLang(e.querySelectorAll(":scope > Label > Content"))[PREFERED_LANGUAGE];
 
-export const getCode = (e: Element): string => new XMLSerializer().serializeToString(e);
+export const getXMLCode = (e: Element): string => new XMLSerializer().serializeToString(e);

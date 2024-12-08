@@ -2,7 +2,13 @@ import { CATEGORY_ID, CATEGORY_XML_PATH, CATEGORY_SCHEME_ID } from "@utils/conta
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
-import { getCode, getElementContent, getElementURN, getLabelsByLang, getPreferedLabel } from "./common";
+import {
+    getXMLCode,
+    getElementContent,
+    getElementURN,
+    getLabelsByLang,
+    getPreferedLabel
+} from "./common";
 
 export const getCategories = (xmlDoc: Document | Element): DDIBaseObject[] => {
     const categories = xmlDoc.getElementsByTagName(CATEGORY_XML_PATH);
@@ -26,13 +32,13 @@ export const getCategory = (xmlDoc: Document, id: string): DDIDetailledObject =>
     const labels = category.querySelectorAll(":scope > Label > Content");
 
     const categoryScheme = category.closest("CategoryScheme") as Element;
-    const parentURN = getElementURN(categoryScheme);
-    const parentLabel = getElementContent(categoryScheme);
+    const containedInURN = getElementURN(categoryScheme);
+    const containedInLabel = getElementContent(categoryScheme);
 
     return {
         URN: getElementURN(category),
         labels: getLabelsByLang(labels),
-        parent: { type: CATEGORY_SCHEME_ID, URN: parentURN, label: parentLabel },
-        code: getCode(category)
+        containedIn: { type: CATEGORY_SCHEME_ID, URN: containedInURN, label: containedInLabel },
+        code: getXMLCode(category)
     };
 };
