@@ -24,7 +24,7 @@ export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObj
         return id === foundId;
     });
     if (!categoryScheme) throw new Error(`Unknow Category Scheme: ${id}`);
-    console.log(categoryScheme);
+
     const labels = categoryScheme.querySelectorAll(":scope > Label > Content");
     const children = getCategories(categoryScheme);
 
