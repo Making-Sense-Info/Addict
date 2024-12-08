@@ -3,11 +3,12 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { assert } from "tsafe";
 
 import { Error, Loader } from "@components/common";
+import NotFound from "@components/not-found";
 
 import { getContent } from "@api/file-content";
 
 import { getResourcesUrl } from "@utils/env";
-import { getDDIObject } from "@utils/xml";
+import { getDDIObject, getTitle } from "@utils/xml";
 
 import { DDIObjectIDs } from "@model/index";
 
@@ -22,7 +23,7 @@ const DDIObjectConstainer = () => {
         queryFn: () => getContent(getResourcesUrl(path))
     });
 
-    // TODO add not found if no path or no id
+    if (!path) return <NotFound message={"DDI file path is undefined"} />;
 
     if (isPending) return <Loader />;
 
