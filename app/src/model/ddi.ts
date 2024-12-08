@@ -4,14 +4,21 @@ import {
     CATEGORY_LABEL,
     CATEGORY_SCHEME_LABEL,
     VARIABLE_ID,
-    VARIABLE_LABEL
+    VARIABLE_LABEL,
+    VARIABLE_SCHEME_ID,
+    VARIABLE_SCHEME_LABEL
 } from "@utils/contants";
 
-export type DDIObjectIDs = typeof CATEGORY_SCHEME_ID | typeof CATEGORY_ID | typeof VARIABLE_ID;
+export type DDIObjectIDs =
+    | typeof CATEGORY_SCHEME_ID
+    | typeof CATEGORY_ID
+    | typeof VARIABLE_SCHEME_ID
+    | typeof VARIABLE_ID;
 
 export type DDIObjectLabels =
     | typeof CATEGORY_SCHEME_LABEL
     | typeof CATEGORY_LABEL
+    | typeof VARIABLE_SCHEME_LABEL
     | typeof VARIABLE_LABEL;
 
 export type DDIBaseObject = {

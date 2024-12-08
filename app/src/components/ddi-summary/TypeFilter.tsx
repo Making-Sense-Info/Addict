@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 
 import { useClickOutside } from "@hooks/click";
 
-import { getLabelFromId } from "@utils/badges";
+import { getTitle } from "@utils/xml";
 
 import { DDIObjectIDs } from "@model/ddi";
 
@@ -58,7 +58,7 @@ const TypeFilter = ({ types, selectedTypes, onToggleType }: TypeFilterProps) => 
                                         onChange={() => onToggleType(type)}
                                     />
                                 }
-                                label={getLabelFromId(type)}
+                                label={getTitle(type)}
                             />
                         ))}
                 </Paper>

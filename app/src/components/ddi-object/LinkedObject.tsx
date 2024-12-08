@@ -2,7 +2,8 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import { Box, Chip, IconButton, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import { getBadgeColor, getLabelFromId } from "@utils/badges";
+import { getBadgeColor } from "@utils/badges";
+import { getTitle } from "@utils/xml";
 
 import { DDIBaseObject } from "@model/ddi";
 
@@ -25,7 +26,7 @@ const LinkedObject = ({ item, path }: LinkedObjectProps) => {
             }}
         >
             <Chip
-                label={getLabelFromId(type)}
+                label={getTitle(type)}
                 sx={{ backgroundColor: getBadgeColor(palette.primary.main)(type) }}
             />
             <Typography variant="body1">{label || URN}</Typography>

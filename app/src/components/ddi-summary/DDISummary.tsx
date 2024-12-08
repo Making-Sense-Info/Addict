@@ -20,8 +20,9 @@ import { useNavigate } from "react-router-dom";
 
 import { TruncatedTableCell } from "@components/common";
 
-import { getBadgeColor, getLabelFromId } from "@utils/badges";
+import { getBadgeColor } from "@utils/badges";
 import { DDI_OBJECTS } from "@utils/contants";
+import { getTitle } from "@utils/xml";
 
 import { DDIBaseObject } from "@model/ddi";
 import { type DDIObjectIDs } from "@model/index";
@@ -170,7 +171,7 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
                                 <TruncatedTableCell maxWidth={200}>{row.label}</TruncatedTableCell>
                                 <TableCell sx={{ padding: 1, textAlign: "center" }}>
                                     <Chip
-                                        label={getLabelFromId(row.type)}
+                                        label={getTitle(row.type)}
                                         sx={{ backgroundColor: getColor(row.type) }}
                                     />
                                 </TableCell>

@@ -1,6 +1,8 @@
 import { PREFERED_LANGUAGE } from "@utils/env";
 
-export const getLabelsByLang = (labels: HTMLCollectionOf<Element>): Record<string, string> =>
+export const getLabelsByLang = (
+    labels: HTMLCollectionOf<Element> | NodeListOf<Element>
+): Record<string, string> =>
     Array.from(labels).reduce((acc, l) => {
         const lang = l.getAttribute("xml:lang") as string;
         const content = l.textContent?.trim() || "";

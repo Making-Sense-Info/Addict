@@ -8,7 +8,7 @@ import { getCode, getElementURN, getLabelsByLang, getPreferedLabel } from "./com
 export const getCategorySchemes = (xmlDoc: Document): DDIBaseObject[] => {
     const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_XML_PATH);
     return Array.from(categorySchemes).map(c => {
-        const labels = c.getElementsByTagName("r:Content");
+        const labels = c.querySelectorAll(":scope > Label > Content");
         return {
             URN: getElementURN(c),
             label: getPreferedLabel(getLabelsByLang(labels)),
@@ -24,7 +24,8 @@ export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObj
         return id === foundId;
     });
     if (!categoryScheme) throw new Error(`Unknow Category Scheme: ${id}`);
-    const labels = categoryScheme.getElementsByTagName("r:Content");
+    console.log(categoryScheme);
+    const labels = categoryScheme.querySelectorAll(":scope > Label > Content");
     const children = getCategories(categoryScheme);
 
     // TODO find parent
