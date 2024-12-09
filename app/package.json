@@ -10,7 +10,7 @@
         "lint": "eslint .",
         "preview": "vite preview",
         "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx}\"",
-        "prepare": "husky"
+        "prepare": "cd .. && husky install app/.husky"
     },
     "dependencies": {
         "@emotion/react": "^11.13.5",
