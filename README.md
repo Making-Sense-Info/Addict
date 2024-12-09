@@ -4,15 +4,31 @@
 
 A DDI catalog tool.
 
-## Resources
+## Motivations
 
-[DDI resources](./resources/README.md)
+Addict is a React TS proof of concept to visualize DDI resources.
 
-## Application
+It's entirely client side, based on Github files, configurable through environment variables (see [here](./app/.env)).
 
-[Source code](./app/README.md)
+Addict will display folders and files stored in `resources` folder.
 
-## Addict DDI support
+### Interested in the project?
+
+You can provide pull request [here](https://github.com/Making-Sense-Info/Addict/pulls) to add your resources, or connect your own Github repository to the app (_To greatly increase Github API rate limit, it is advisable to define a GITHUB_TOKEN._).
+
+If you encounter any problems, if you have great ideas, you can write an issue [here](https://github.com/Making-Sense-Info/Addict/issues).
+
+## Repository resources
+
+[DDI resources](./resources)
+
+## Addict application
+
+[Source code](./app)
+
+### DDI support
+
+The current version of Addict supports the following objects and links:
 
 ```mermaid
 classDiagram
