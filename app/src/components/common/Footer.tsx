@@ -11,13 +11,19 @@ const FloatingFooter: React.FC = () => {
                 width: "100%",
                 backgroundColor: palette.primary.main,
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "space-between",
                 alignItems: "center",
                 padding: 2,
                 height: "5vh"
             }}
         >
-            <a href="https://making-sense.info" target="_blank" rel="noopener noreferrer">
+            <span>{`v${__APP_VERSION__}`}</span>
+            <a
+                href="https://making-sense.info"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "flex", justifyContent: "center" }}
+            >
                 <img
                     src="https://making-sense.info/img/ill_making_sense_flat.svg"
                     alt="Making Sense"
