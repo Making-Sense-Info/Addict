@@ -1,4 +1,9 @@
-import { CATEGORY_SCHEME_ID, CATEGORY_SCHEME_XML_PATH, DDI_INSTANCE_ID } from "@utils/contants";
+import {
+    CATEGORY_SCHEME_ID,
+    CATEGORY_SCHEME_XML_TAG,
+    DDI_INSTANCE_ID,
+    DDI_L_NAMESPACE
+} from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
@@ -12,7 +17,7 @@ import {
 } from "./common";
 
 export const getCategorySchemes = (xmlDoc: Document | Element): DDIBaseObject[] => {
-    const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_XML_PATH);
+    const categorySchemes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CATEGORY_SCHEME_XML_TAG);
     return Array.from(categorySchemes).map(c => {
         const labels = c.querySelectorAll(":scope > Label > Content");
         return {
@@ -24,7 +29,7 @@ export const getCategorySchemes = (xmlDoc: Document | Element): DDIBaseObject[] 
 };
 
 export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObject => {
-    const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_XML_PATH);
+    const categorySchemes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CATEGORY_SCHEME_XML_TAG);
     const categoryScheme = Array.from(categorySchemes).find(c => {
         const foundId = c.querySelector("ID")?.textContent;
         return id === foundId;

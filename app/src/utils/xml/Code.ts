@@ -1,4 +1,4 @@
-import { CODE_ID, CODE_LIST_ID, CODE_XML_PATH } from "@utils/contants";
+import { CODE_ID, CODE_LIST_ID, CODE_XML_TAG, DDI_L_NAMESPACE } from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
@@ -6,7 +6,7 @@ import { getCategories } from "./Category";
 import { getXMLCode, getElementContent, getElementURN } from "./common";
 
 export const getCodes = (xmlDoc: Document | Element): DDIBaseObject[] => {
-    const codes = xmlDoc.getElementsByTagName(CODE_XML_PATH);
+    const codes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CODE_XML_TAG);
     return Array.from(codes).map(v => {
         const value = v.querySelector(":scope > Value")?.textContent || "";
         return {
@@ -18,7 +18,7 @@ export const getCodes = (xmlDoc: Document | Element): DDIBaseObject[] => {
 };
 
 export const getCode = (xmlDoc: Document, id: string): DDIDetailledObject => {
-    const codes = xmlDoc.getElementsByTagName(CODE_XML_PATH);
+    const codes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CODE_XML_TAG);
     const code = Array.from(codes).find(v => {
         const foundId = v.querySelector("ID")?.textContent;
         return id === foundId;

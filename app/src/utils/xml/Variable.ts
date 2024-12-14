@@ -1,4 +1,10 @@
-import { VARIABLE_ID, VARIABLE_SCHEME_ID, VARIABLE_XML_PATH } from "@utils/contants";
+import {
+    DDI_L_NAMESPACE,
+    VARIABLE_ID,
+    VARIABLE_SCHEME_ID,
+    VARIABLE_SCHEME_XML_TAG,
+    VARIABLE_XML_TAG
+} from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
@@ -11,7 +17,7 @@ import {
 } from "./common";
 
 export const getVariables = (xmlDoc: Document | Element): DDIBaseObject[] => {
-    const variables = xmlDoc.getElementsByTagName(VARIABLE_XML_PATH);
+    const variables = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, VARIABLE_XML_TAG);
     return Array.from(variables).map(v => {
         const labels = v.querySelectorAll(":scope > Label > Content");
         return {
@@ -23,7 +29,7 @@ export const getVariables = (xmlDoc: Document | Element): DDIBaseObject[] => {
 };
 
 export const getVariable = (xmlDoc: Document, id: string): DDIDetailledObject => {
-    const variables = xmlDoc.getElementsByTagName(VARIABLE_XML_PATH);
+    const variables = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, VARIABLE_XML_TAG);
     const variable = Array.from(variables).find(v => {
         const foundId = v.querySelector("ID")?.textContent;
         return id === foundId;
@@ -31,7 +37,7 @@ export const getVariable = (xmlDoc: Document, id: string): DDIDetailledObject =>
     if (!variable) throw new Error(`Unknow Variable: ${id}`);
     const labels = variable.querySelectorAll(":scope > Label > Content");
 
-    const variableScheme = variable.closest("VariableScheme") as Element;
+    const variableScheme = variable.closest(VARIABLE_SCHEME_XML_TAG) as Element;
     const containedInURN = getElementURN(variableScheme);
     const containedInLabel = getElementContent(variableScheme);
 

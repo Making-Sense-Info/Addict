@@ -1,4 +1,10 @@
-import { CODE_LIST_SCHEME_ID, CODE_LIST_SCHEME_XML_PATH, DDI_INSTANCE_ID } from "@utils/contants";
+import {
+    CODE_LIST_SCHEME_ID,
+    CODE_LIST_SCHEME_XML_TAG,
+    DDI_INSTANCE_ID,
+    DDI_INSTANCE_XML_TAG,
+    DDI_L_NAMESPACE
+} from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
@@ -12,7 +18,7 @@ import {
 } from "./common";
 
 export const getCodeListSchemes = (xmlDoc: Document | Element): DDIBaseObject[] => {
-    const codeListSchemes = xmlDoc.getElementsByTagName(CODE_LIST_SCHEME_XML_PATH);
+    const codeListSchemes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CODE_LIST_SCHEME_XML_TAG);
     return Array.from(codeListSchemes).map(c => {
         const labels = c.querySelectorAll(":scope > CodeListSchemeName > String");
         return {
@@ -24,7 +30,7 @@ export const getCodeListSchemes = (xmlDoc: Document | Element): DDIBaseObject[] 
 };
 
 export const getCodeListScheme = (xmlDoc: Document, id: string): DDIDetailledObject => {
-    const codeListSchemes = xmlDoc.getElementsByTagName(CODE_LIST_SCHEME_XML_PATH);
+    const codeListSchemes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CODE_LIST_SCHEME_XML_TAG);
     const codeListScheme = Array.from(codeListSchemes).find(c => {
         const foundId = c.querySelector("ID")?.textContent;
         return id === foundId;
@@ -34,7 +40,7 @@ export const getCodeListScheme = (xmlDoc: Document, id: string): DDIDetailledObj
     const labels = codeListScheme.querySelectorAll(":scope > CodeListSchemeName > String");
     const contains = getCodeLists(codeListScheme);
 
-    const ddiInstance = codeListScheme.closest("DDIInstance") as Element;
+    const ddiInstance = codeListScheme.closest(DDI_INSTANCE_XML_TAG) as Element;
     const containedInURN = getElementURN(ddiInstance);
     const containedInLabel = getElementContent(ddiInstance);
 

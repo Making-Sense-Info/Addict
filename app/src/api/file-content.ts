@@ -8,4 +8,9 @@ export const getContent = (url: string) =>
             }
             throw new Error(`API returns: ${r.status}`);
         })
-        .then(r => decodeBase64(r.content));
+        .then(r => {
+            if (r.encoding === "base64") {
+                return decodeBase64(r.content);
+            }
+            return r.content;
+        });

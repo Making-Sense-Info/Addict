@@ -39,13 +39,21 @@ export const VARIABLE_SCHEME_LABEL = "Variable Scheme";
 
 /* XML */
 
-export const CATEGORY_XML_PATH = "l:Category";
-export const CATEGORY_SCHEME_XML_PATH = "l:CategoryScheme";
-export const CODE_XML_PATH = "l:Code";
-export const CODE_LIST_XML_PATH = "l:CodeList";
-export const CODE_LIST_SCHEME_XML_PATH = "l:CodeListScheme";
-export const DDI_INSTANCE_XML_PATH = "DDIInstance";
-export const QUESTION_ITEM_XML_PATH = "d:QuestionItem";
-export const QUESTION_SCHEME_XML_PATH = "d:QuestionScheme";
-export const VARIABLE_XML_PATH = "l:Variable";
-export const VARIABLE_SCHEME_XML_PATH = "l:VariableScheme";
+/* NAMESPACES */
+
+export const DDI_L_NAMESPACE = "ddi:logicalproduct:3_3";
+export const DDI_D_NAMESPACE = "ddi:datacollection:3_3";
+export const DDI_R_NAMESPACE = "ddi:reusable:3_3";
+
+/* PATHS */
+
+export const CATEGORY_XML_TAG = "Category";
+export const CATEGORY_SCHEME_XML_TAG = "CategoryScheme";
+export const CODE_XML_TAG = "Code";
+export const CODE_LIST_XML_TAG = "CodeList";
+export const CODE_LIST_SCHEME_XML_TAG = "CodeListScheme";
+export const DDI_INSTANCE_XML_TAG = "DDIInstance";
+export const QUESTION_ITEM_XML_TAG = "QuestionItem";
+export const QUESTION_SCHEME_XML_TAG = "QuestionScheme";
+export const VARIABLE_XML_TAG = "Variable";
+export const VARIABLE_SCHEME_XML_TAG = "VariableScheme";

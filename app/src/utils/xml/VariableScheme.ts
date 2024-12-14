@@ -1,4 +1,10 @@
-import { DDI_INSTANCE_ID, VARIABLE_SCHEME_ID, VARIABLE_SCHEME_XML_PATH } from "@utils/contants";
+import {
+    DDI_INSTANCE_ID,
+    DDI_INSTANCE_XML_TAG,
+    DDI_L_NAMESPACE,
+    VARIABLE_SCHEME_ID,
+    VARIABLE_SCHEME_XML_TAG
+} from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
@@ -12,7 +18,7 @@ import {
 } from "./common";
 
 export const getVariableSchemes = (xmlDoc: Document | Element): DDIBaseObject[] => {
-    const variableSchemes = xmlDoc.getElementsByTagName(VARIABLE_SCHEME_XML_PATH);
+    const variableSchemes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, VARIABLE_SCHEME_XML_TAG);
     return Array.from(variableSchemes).map(v => {
         const labels = v.querySelectorAll(":scope > Label > Content");
         return {
@@ -24,7 +30,7 @@ export const getVariableSchemes = (xmlDoc: Document | Element): DDIBaseObject[] 
 };
 
 export const getVariableScheme = (xmlDoc: Document, id: string): DDIDetailledObject => {
-    const variableSchemes = xmlDoc.getElementsByTagName(VARIABLE_SCHEME_XML_PATH);
+    const variableSchemes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, VARIABLE_SCHEME_XML_TAG);
     const variableScheme = Array.from(variableSchemes).find(v => {
         const foundId = v.querySelector("ID")?.textContent;
         return id === foundId;
@@ -33,7 +39,7 @@ export const getVariableScheme = (xmlDoc: Document, id: string): DDIDetailledObj
     const labels = variableScheme.querySelectorAll(":scope > Label > Content");
     const contains = getVariables(variableScheme);
 
-    const ddiInstance = variableScheme.closest("DDIInstance") as Element;
+    const ddiInstance = variableScheme.closest(DDI_INSTANCE_XML_TAG) as Element;
     const containedInURN = getElementURN(ddiInstance);
     const containedInLabel = getElementContent(ddiInstance);
 

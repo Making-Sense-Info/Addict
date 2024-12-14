@@ -1,4 +1,4 @@
-import { DDI_INSTANCE_ID, DDI_INSTANCE_XML_PATH } from "@utils/contants";
+import { DDI_INSTANCE_ID, DDI_INSTANCE_XML_TAG } from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
@@ -9,7 +9,7 @@ import { getVariableSchemes } from "./VariableScheme";
 import { getXMLCode, getElementURN, getLabelsByLang, getPreferedLabel } from "./common";
 
 export const getDDIInstances = (xmlDoc: Document): DDIBaseObject[] => {
-    const ddiInstances = xmlDoc.getElementsByTagName(DDI_INSTANCE_XML_PATH);
+    const ddiInstances = xmlDoc.getElementsByTagName(DDI_INSTANCE_XML_TAG);
     return Array.from(ddiInstances).map(d => {
         const labels = d.querySelectorAll(":scope > Citation > Title > String");
         return {
@@ -21,7 +21,7 @@ export const getDDIInstances = (xmlDoc: Document): DDIBaseObject[] => {
 };
 
 export const getDDIInstance = (xmlDoc: Document, id: string): DDIDetailledObject => {
-    const ddiInstances = xmlDoc.getElementsByTagName(DDI_INSTANCE_XML_PATH);
+    const ddiInstances = xmlDoc.getElementsByTagName(DDI_INSTANCE_XML_TAG);
     const ddiInstance = Array.from(ddiInstances).find(c => {
         const foundId = c.querySelector("ID")?.textContent;
         return id === foundId;
