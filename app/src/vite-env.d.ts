@@ -10,6 +10,7 @@ type ImportMetaEnv = {
   GITHUB_REPO_OWNER: string
   GITHUB_REPO_NAME: string
   GITHUB_REPO_BRANCH: string
+  ROOT_SUB_PATH: string
   GITHUB_TOKEN: string
   PREFERED_LANGUAGE: string
   // @user-defined-start

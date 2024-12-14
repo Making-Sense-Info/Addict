@@ -2,6 +2,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import { Typography } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 
+import { ROOT_SUB_PATH } from "@utils/env";
+
 type GitHubBreadcrumbsProps = {
     path: string;
     setPath: (p: string) => void;
@@ -29,7 +31,7 @@ function GitHubBreadcrumbs({ path, setPath }: GitHubBreadcrumbsProps) {
                         }
                     }}
                 >
-                    {item === "resources" ? (
+                    {item === ROOT_SUB_PATH ? (
                         <>
                             <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
                             Home

@@ -1,3 +1,4 @@
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
     Table,
     TableBody,
@@ -11,7 +12,8 @@ import {
     Box,
     Chip,
     Paper,
-    useTheme
+    useTheme,
+    IconButton
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -97,107 +99,126 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
     const getColor = (id: DDIObjectID) => getBadgeColor(palette.primary.main)(id);
 
     return (
-        <Paper sx={{ width: "80%", margin: "auto", marginTop: "2em", marginBottom: "10px" }}>
-            <Box sx={{ display: "flex", justifyContent: "center", margin: "16px" }}>
-                <TextField
-                    label="Search"
-                    variant="outlined"
-                    value={filterText}
-                    onChange={e => setFilterText(e.target.value)}
-                    sx={{ width: "50%" }}
-                />
-            </Box>
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell
-                                sx={{
-                                    textAlign: "center",
-                                    fontWeight: "bold",
-                                    width: "35%"
-                                }}
-                            >
-                                <TableSortLabel
-                                    active={orderBy === "URN"}
-                                    direction={order}
-                                    onClick={() => handleSort("URN")}
-                                >
-                                    ID
-                                </TableSortLabel>
-                            </TableCell>
-                            <TableCell
-                                sx={{
-                                    textAlign: "center",
-                                    fontWeight: "bold",
-                                    width: "45%"
-                                }}
-                            >
-                                <TableSortLabel
-                                    active={orderBy === "label"}
-                                    direction={order}
-                                    onClick={() => handleSort("label")}
-                                >
-                                    Label
-                                </TableSortLabel>
-                            </TableCell>
-                            <TableCell>
-                                <Box
+        <>
+            <Paper
+                sx={{
+                    width: "80%",
+                    margin: "auto",
+                    marginTop: "2em",
+                    marginBottom: "10px"
+                }}
+            >
+                <IconButton onClick={() => navigate(-1)} sx={{ marginRight: "auto" }}>
+                    <ArrowBackIcon />
+                </IconButton>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center"
+                    }}
+                >
+                    <TextField
+                        label="Search"
+                        variant="outlined"
+                        value={filterText}
+                        onChange={e => setFilterText(e.target.value)}
+                        sx={{ width: "50%" }}
+                    />
+                </Box>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell
                                     sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
                                         textAlign: "center",
-                                        fontWeight: "bold"
+                                        fontWeight: "bold",
+                                        width: "35%"
                                     }}
                                 >
-                                    Type
-                                    <TypeFilter
-                                        types={DDI_OBJECTS}
-                                        selectedTypes={selectedTypes}
-                                        onToggleType={handleTypeChange}
-                                    />
-                                </Box>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {paginatedRows.map(row => {
-                            const handleClick = (event: React.MouseEvent): void => {
-                                if (window.getSelection()?.toString()) {
-                                    event.stopPropagation();
-                                    event.preventDefault();
-                                    return;
-                                }
-                                navigate(`/${row.type}/${row.URN.split(":")[1]}?path=${path}`);
-                            };
-                            return (
-                                <TableRow key={row.URN} onClick={handleClick} hover={true}>
-                                    <TruncatedTableCell maxWidth={200}>{row.URN}</TruncatedTableCell>
-                                    <TruncatedTableCell maxWidth={200}>{row.label}</TruncatedTableCell>
-                                    <TableCell sx={{ padding: 1, textAlign: "center" }}>
-                                        <Chip
-                                            label={getTitle(row.type)}
-                                            sx={{ backgroundColor: getColor(row.type) }}
+                                    <TableSortLabel
+                                        active={orderBy === "URN"}
+                                        direction={order}
+                                        onClick={() => handleSort("URN")}
+                                    >
+                                        ID
+                                    </TableSortLabel>
+                                </TableCell>
+                                <TableCell
+                                    sx={{
+                                        textAlign: "center",
+                                        fontWeight: "bold",
+                                        width: "45%"
+                                    }}
+                                >
+                                    <TableSortLabel
+                                        active={orderBy === "label"}
+                                        direction={order}
+                                        onClick={() => handleSort("label")}
+                                    >
+                                        Label
+                                    </TableSortLabel>
+                                </TableCell>
+                                <TableCell>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            textAlign: "center",
+                                            fontWeight: "bold"
+                                        }}
+                                    >
+                                        Type
+                                        <TypeFilter
+                                            types={DDI_OBJECTS}
+                                            selectedTypes={selectedTypes}
+                                            onToggleType={handleTypeChange}
                                         />
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                sx={{ zIndex: -1 }}
-                rowsPerPageOptions={[10, 25, 50]}
-                component="div"
-                count={filteredRows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-        </Paper>
+                                    </Box>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {paginatedRows.map(row => {
+                                const handleClick = (event: React.MouseEvent): void => {
+                                    if (window.getSelection()?.toString()) {
+                                        event.stopPropagation();
+                                        event.preventDefault();
+                                        return;
+                                    }
+                                    navigate(`/${row.type}/${row.URN.split(":")[1]}?path=${path}`);
+                                };
+                                return (
+                                    <TableRow key={row.URN} onClick={handleClick} hover={true}>
+                                        <TruncatedTableCell maxWidth={200}>{row.URN}</TruncatedTableCell>
+                                        <TruncatedTableCell maxWidth={200}>
+                                            {row.label}
+                                        </TruncatedTableCell>
+                                        <TableCell sx={{ padding: 1, textAlign: "center" }}>
+                                            <Chip
+                                                label={getTitle(row.type)}
+                                                sx={{ backgroundColor: getColor(row.type) }}
+                                            />
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    sx={{ zIndex: -1 }}
+                    rowsPerPageOptions={[10, 25, 50]}
+                    component="div"
+                    count={filteredRows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </Paper>
+        </>
     );
 };
 

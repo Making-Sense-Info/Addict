@@ -48,7 +48,7 @@ const DDIObject = ({ type, object, path }: DDIObjectProps) => {
                     position: "relative"
                 }}
             >
-                <IconButton onClick={() => navigate(`/summary?path=${path}`)}>
+                <IconButton onClick={() => navigate(-1)}>
                     <ArrowBackIcon />
                 </IconButton>
                 <Typography

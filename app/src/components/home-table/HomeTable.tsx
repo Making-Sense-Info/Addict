@@ -21,10 +21,9 @@ import { type ResourceType } from "@model/index";
 type HomeTableProps = {
     data: ResourceType[];
     path: string;
-    setPath: (p: string) => void;
 };
 
-const HomeTable = ({ data, path, setPath }: HomeTableProps) => {
+const HomeTable = ({ data, path }: HomeTableProps) => {
     const navigate = useNavigate();
     const [page, setPage] = useState(0);
     const rowsPerPage = 10;
@@ -40,6 +39,10 @@ const HomeTable = ({ data, path, setPath }: HomeTableProps) => {
 
     const handleChangePage = (_: unknown, newPage: number) => {
         setPage(newPage);
+    };
+
+    const setPath = (p: string) => {
+        navigate(`?path=${p}`);
     };
 
     return (
