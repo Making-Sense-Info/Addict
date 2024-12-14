@@ -9,8 +9,12 @@ export const getContent = (url: string) =>
             throw new Error(`API returns: ${r.status}`);
         })
         .then(r => {
-            if (r.encoding === "base64") {
-                return decodeBase64(r.content);
+            const { encoding, content, download_url } = r;
+            if (!content && download_url) {
+                return fetch(download_url).then(r => r.text());
             }
-            return r.content;
+            if (encoding === "base64") {
+                return decodeBase64(content);
+            }
+            return content;
         });
