@@ -1,5 +1,4 @@
 import {
-    DDI_INSTANCE_ID,
     DDI_INSTANCE_XML_TAG,
     DDI_L_NAMESPACE,
     VARIABLE_SCHEME_ID,
@@ -9,13 +8,7 @@ import {
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
 import { getVariables } from "./Variable";
-import {
-    getXMLCode,
-    getElementURN,
-    getLabelsByLang,
-    getPreferedLabel,
-    getElementContent
-} from "./common";
+import { getXMLCode, getElementURN, getLabelsByLang, getPreferedLabel, getParentNode } from "./common";
 
 export const getVariableSchemes = (xmlDoc: Document | Element): DDIBaseObject[] => {
     const variableSchemes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, VARIABLE_SCHEME_XML_TAG);
@@ -39,15 +32,14 @@ export const getVariableScheme = (xmlDoc: Document, id: string): DDIDetailledObj
     const labels = variableScheme.querySelectorAll(":scope > Label > Content");
     const contains = getVariables(variableScheme);
 
-    const ddiInstance = variableScheme.closest(DDI_INSTANCE_XML_TAG) as Element;
-    const containedInURN = getElementURN(ddiInstance);
-    const containedInLabel = getElementContent(ddiInstance);
+    const ddiInstanceElement = variableScheme.closest(DDI_INSTANCE_XML_TAG) as Element;
+    const parentElement = getParentNode(ddiInstanceElement);
 
     return {
         URN: getElementURN(variableScheme),
         labels: getLabelsByLang(labels),
         contains,
-        containedIn: { type: DDI_INSTANCE_ID, URN: containedInURN, label: containedInLabel },
+        containedIn: parentElement,
         code: getXMLCode(variableScheme)
     };
 };

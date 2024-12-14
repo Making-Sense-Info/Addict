@@ -6,12 +6,12 @@ import { useClickOutside } from "@hooks/click";
 
 import { getTitle } from "@utils/xml";
 
-import { DDIObjectIDs } from "@model/ddi";
+import { DDIObjectID } from "@model/ddi";
 
 type TypeFilterProps = {
-    types: Array<DDIObjectIDs>;
-    selectedTypes: Set<DDIObjectIDs>;
-    onToggleType: (d: DDIObjectIDs) => void;
+    types: Array<DDIObjectID>;
+    selectedTypes: Set<DDIObjectID>;
+    onToggleType: (d: DDIObjectID) => void;
 };
 
 const TypeFilter = ({ types, selectedTypes, onToggleType }: TypeFilterProps) => {

@@ -1,4 +1,4 @@
-import { DDIObjectIDs } from "@model/ddi";
+import { DDIObjectID } from "@model/ddi";
 
 /* Route path */
 export const CATEGORY_ID = "category";
@@ -23,7 +23,7 @@ export const DDI_OBJECTS = [
     QUESTION_SCHEME_ID,
     VARIABLE_ID,
     VARIABLE_SCHEME_ID
-] as Array<DDIObjectIDs>;
+] as Array<DDIObjectID>;
 
 /* Supported DDI objects */
 export const CATEGORY_LABEL = "Category";

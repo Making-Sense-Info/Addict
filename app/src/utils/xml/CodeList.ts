@@ -1,6 +1,5 @@
 import {
     CODE_LIST_ID,
-    CODE_LIST_SCHEME_ID,
     CODE_LIST_SCHEME_XML_TAG,
     CODE_LIST_XML_TAG,
     DDI_L_NAMESPACE,
@@ -11,13 +10,7 @@ import {
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
 import { getCodes } from "./Code";
-import {
-    getXMLCode,
-    getElementContent,
-    getElementURN,
-    getLabelsByLang,
-    getPreferedLabel
-} from "./common";
+import { getXMLCode, getElementURN, getLabelsByLang, getPreferedLabel, getParentNode } from "./common";
 
 export const getCodeLists = (xmlDoc: Document | Element): DDIBaseObject[] => {
     const codeLists = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CODE_LIST_XML_TAG);
@@ -42,12 +35,12 @@ export const getCodeList = (xmlDoc: Document, id: string): DDIDetailledObject =>
 
     const contains = getCodes(codeList);
 
-    const codeListScheme = codeList.closest(CODE_LIST_SCHEME_XML_TAG) as Element;
-    const containedInURN = getElementURN(codeListScheme);
-    const containedInLabel = getElementContent(codeListScheme);
+    const codeListSchemeElement = codeList.closest(CODE_LIST_SCHEME_XML_TAG) as Element;
+    const parentElement = getParentNode(codeListSchemeElement);
+
+    const codeListURN = getElementURN(codeList);
 
     // TODO: extract? share? refacto?
-    const codeListURN = getElementURN(codeList);
     const questionItemsUses: DDIBaseObject[] = Array.from(
         xmlDoc.getElementsByTagName(QUESTION_ITEM_XML_TAG)
     )
@@ -70,7 +63,7 @@ export const getCodeList = (xmlDoc: Document, id: string): DDIDetailledObject =>
         URN: codeListURN,
         labels: getLabelsByLang(labels),
         contains,
-        containedIn: { type: CODE_LIST_SCHEME_ID, URN: containedInURN, label: containedInLabel },
+        containedIn: parentElement,
         usedIn: questionItemsUses,
         code: getXMLCode(codeList)
     };

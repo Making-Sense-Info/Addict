@@ -23,14 +23,14 @@ import { DDI_OBJECTS } from "@utils/contants";
 import { getTitle } from "@utils/xml";
 
 import { DDIBaseObject } from "@model/ddi";
-import { type DDIObjectIDs } from "@model/index";
+import { type DDIObjectID } from "@model/index";
 
 import TypeFilter from "./TypeFilter";
 
 interface Row {
     URN: string;
     label: string;
-    type: DDIObjectIDs;
+    type: DDIObjectID;
 }
 
 type DDISummaryProps = {
@@ -94,7 +94,7 @@ const DDISummary = ({ objects, path }: DDISummaryProps) => {
 
     const paginatedRows = filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-    const getColor = (id: DDIObjectIDs) => getBadgeColor(palette.primary.main)(id);
+    const getColor = (id: DDIObjectID) => getBadgeColor(palette.primary.main)(id);
 
     return (
         <Paper sx={{ width: "80%", margin: "auto", marginTop: "2em", marginBottom: "10px" }}>

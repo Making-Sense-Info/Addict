@@ -8,7 +8,7 @@ import XMLViewer from "@components/common/XMLViewer";
 
 import { getTitle } from "@utils/xml";
 
-import { DDIDetailledObject, DDIObjectIDs } from "@model/ddi";
+import { DDIDetailledObject, DDIObjectID } from "@model/ddi";
 
 import KeyValueList from "../common/KeyValueList";
 import LinkedObject from "./LinkedObject";
@@ -19,7 +19,7 @@ const langFlags: Record<string, string> = {
 };
 
 interface DDIObjectProps {
-    type: DDIObjectIDs;
+    type: DDIObjectID;
     object: DDIDetailledObject;
     path: string;
 }

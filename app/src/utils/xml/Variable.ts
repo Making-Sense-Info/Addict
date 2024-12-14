@@ -1,20 +1,13 @@
 import {
     DDI_L_NAMESPACE,
     VARIABLE_ID,
-    VARIABLE_SCHEME_ID,
     VARIABLE_SCHEME_XML_TAG,
     VARIABLE_XML_TAG
 } from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
-import {
-    getXMLCode,
-    getElementContent,
-    getElementURN,
-    getLabelsByLang,
-    getPreferedLabel
-} from "./common";
+import { getXMLCode, getElementURN, getLabelsByLang, getPreferedLabel, getParentNode } from "./common";
 
 export const getVariables = (xmlDoc: Document | Element): DDIBaseObject[] => {
     const variables = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, VARIABLE_XML_TAG);
@@ -37,14 +30,13 @@ export const getVariable = (xmlDoc: Document, id: string): DDIDetailledObject =>
     if (!variable) throw new Error(`Unknow Variable: ${id}`);
     const labels = variable.querySelectorAll(":scope > Label > Content");
 
-    const variableScheme = variable.closest(VARIABLE_SCHEME_XML_TAG) as Element;
-    const containedInURN = getElementURN(variableScheme);
-    const containedInLabel = getElementContent(variableScheme);
+    const variableSchemeElement = variable.closest(VARIABLE_SCHEME_XML_TAG) as Element;
+    const parentElement = getParentNode(variableSchemeElement);
 
     return {
         URN: getElementURN(variable),
         labels: getLabelsByLang(labels),
-        containedIn: { type: VARIABLE_SCHEME_ID, URN: containedInURN, label: containedInLabel },
+        containedIn: parentElement,
         code: getXMLCode(variable)
     };
 };
