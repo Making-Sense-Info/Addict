@@ -15,7 +15,7 @@ import LinkedObject from "./LinkedObject";
 
 const langFlags: Record<string, string> = {
     "fr-FR": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",
-    "en-UK": "https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg"
+    "en-GB": "https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg"
 };
 
 interface DDIObjectProps {
