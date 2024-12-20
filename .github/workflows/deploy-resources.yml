@@ -16,20 +16,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Clear gh-pages branch
+    - name: Set up gh-pages branch
       run: |
         git fetch origin gh-pages
         git checkout gh-pages || git checkout --orphan gh-pages
         git rm -rf . --ignore-unmatch
-        echo "gh-pages branch cleared."
+        echo "gh-pages branch prepared."
 
-    - name: Copy new resources
+    - name: Copy resources if they exist
       run: |
-        cp -r ./resources/* ./
-        echo "Resources copied to gh-pages branch."
+        if [ -d "./resources" ]; then
+          cp -r ./resources/* ./
+          echo "Resources copied to gh-pages branch."
+        else
+          echo "No resources found to deploy."
+        fi
 
     - name: Commit and push changes
       run: |
         git add .
-        git commit -m "Deploy DDI resources to GitHub Pages"
+        git commit -m "Deploy DDI resources to GitHub Pages" || echo "No changes to commit."
         git push origin gh-pages --force
