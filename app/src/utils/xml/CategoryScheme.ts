@@ -1,18 +1,17 @@
-import { CATEGORY_SCHEME_ID, CATEGORY_SCHEME_XML_PATH, DDI_INSTANCE_ID } from "@utils/contants";
+import {
+    CATEGORY_SCHEME_ID,
+    CATEGORY_SCHEME_XML_TAG,
+    DDI_INSTANCE_XML_TAG,
+    DDI_L_NAMESPACE
+} from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
 import { getCategories } from "./Category";
-import {
-    getXMLCode,
-    getElementURN,
-    getLabelsByLang,
-    getPreferedLabel,
-    getElementContent
-} from "./common";
+import { getXMLCode, getElementURN, getLabelsByLang, getPreferedLabel, getParentNode } from "./common";
 
 export const getCategorySchemes = (xmlDoc: Document | Element): DDIBaseObject[] => {
-    const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_XML_PATH);
+    const categorySchemes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CATEGORY_SCHEME_XML_TAG);
     return Array.from(categorySchemes).map(c => {
         const labels = c.querySelectorAll(":scope > Label > Content");
         return {
@@ -24,7 +23,7 @@ export const getCategorySchemes = (xmlDoc: Document | Element): DDIBaseObject[] 
 };
 
 export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObject => {
-    const categorySchemes = xmlDoc.getElementsByTagName(CATEGORY_SCHEME_XML_PATH);
+    const categorySchemes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CATEGORY_SCHEME_XML_TAG);
     const categoryScheme = Array.from(categorySchemes).find(c => {
         const foundId = c.querySelector("ID")?.textContent;
         return id === foundId;
@@ -34,15 +33,14 @@ export const getCategoryScheme = (xmlDoc: Document, id: string): DDIDetailledObj
     const labels = categoryScheme.querySelectorAll(":scope > Label > Content");
     const contains = getCategories(categoryScheme);
 
-    const ddiInstance = categoryScheme.closest("DDIInstance") as Element;
-    const containedInURN = getElementURN(ddiInstance);
-    const containedInLabel = getElementContent(ddiInstance);
+    const ddiInstanceElement = categoryScheme.closest(DDI_INSTANCE_XML_TAG) as Element;
+    const parentElement = getParentNode(ddiInstanceElement);
 
     return {
         URN: getElementURN(categoryScheme),
         labels: getLabelsByLang(labels),
         contains,
-        containedIn: { type: DDI_INSTANCE_ID, URN: containedInURN, label: containedInLabel },
+        containedIn: parentElement,
         code: getXMLCode(categoryScheme)
     };
 };

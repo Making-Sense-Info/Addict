@@ -1,6 +1,6 @@
 import * as C from "@utils/contants";
 
-import { DDIBaseObject, DDIDetailledObject, DDIObjectIDs, DDIObjectLabels } from "@model/ddi";
+import { DDIBaseObject, DDIDetailledObject, DDIObjectID, DDIObjectLabels } from "@model/ddi";
 
 import { getCategories, getCategory } from "./Category";
 import { getCategoryScheme, getCategorySchemes } from "./CategoryScheme";
@@ -26,7 +26,7 @@ export const getDDIObjects = (xmlDoc: Document): DDIBaseObject[] => [
     ...getVariableSchemes(xmlDoc)
 ];
 
-export const getDDIObject = (content: Document, type: DDIObjectIDs, id: string): DDIDetailledObject => {
+export const getDDIObject = (content: Document, type: DDIObjectID, id: string): DDIDetailledObject => {
     if (type === C.CATEGORY_ID) return getCategory(content, id);
     if (type === C.CATEGORY_SCHEME_ID) return getCategoryScheme(content, id);
     if (type === C.CODE_ID) return getCode(content, id);
@@ -40,7 +40,7 @@ export const getDDIObject = (content: Document, type: DDIObjectIDs, id: string):
     throw new Error(`Unknow DDI object type: ${type}`);
 };
 
-export const getTitle = (type: DDIObjectIDs): DDIObjectLabels => {
+export const getTitle = (type: DDIObjectID): DDIObjectLabels => {
     if (type === C.CATEGORY_ID) return C.CATEGORY_LABEL;
     if (type === C.CATEGORY_SCHEME_ID) return C.CATEGORY_SCHEME_LABEL;
     if (type === C.CODE_ID) return C.CODE_LABEL;

@@ -1,12 +1,12 @@
 import { lighten } from "@mui/material/styles";
 
-import { DDIObjectIDs } from "@model/ddi";
+import { DDIObjectID } from "@model/ddi";
 
 import * as C from "./contants";
 
 export const getBadgeColor =
     (baseColor: string) =>
-    (id: DDIObjectIDs): string => {
+    (id: DDIObjectID): string => {
         if (id === C.CATEGORY_ID) return lighten(baseColor, 0);
         if (id === C.CATEGORY_SCHEME_ID) return lighten(baseColor, 0.04);
         if (id === C.CODE_ID) return lighten(baseColor, 0.08);

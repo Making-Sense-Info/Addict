@@ -8,18 +8,18 @@ import XMLViewer from "@components/common/XMLViewer";
 
 import { getTitle } from "@utils/xml";
 
-import { DDIDetailledObject, DDIObjectIDs } from "@model/ddi";
+import { DDIDetailledObject, DDIObjectID } from "@model/ddi";
 
 import KeyValueList from "../common/KeyValueList";
 import LinkedObject from "./LinkedObject";
 
 const langFlags: Record<string, string> = {
     "fr-FR": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",
-    "en-UK": "https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg"
+    "en-GB": "https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg"
 };
 
 interface DDIObjectProps {
-    type: DDIObjectIDs;
+    type: DDIObjectID;
     object: DDIDetailledObject;
     path: string;
 }
@@ -48,7 +48,7 @@ const DDIObject = ({ type, object, path }: DDIObjectProps) => {
                     position: "relative"
                 }}
             >
-                <IconButton onClick={() => navigate(`/summary?path=${path}`)}>
+                <IconButton onClick={() => navigate(-1)}>
                     <ArrowBackIcon />
                 </IconButton>
                 <Typography

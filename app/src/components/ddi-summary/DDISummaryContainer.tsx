@@ -23,6 +23,8 @@ function DDISummaryContainer() {
 
     if (error) return <Error message={error.message} />;
 
+    if (!data) return <Error message={"No data"} />;
+
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(data, "application/xml");
 

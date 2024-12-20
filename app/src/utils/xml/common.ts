@@ -1,4 +1,7 @@
+import * as C from "@utils/contants";
 import { PREFERED_LANGUAGE } from "@utils/env";
+
+import { DDIBaseObject, DDIObjectID } from "@model/ddi";
 
 export const getLabelsByLang = (labels: NodeListOf<Element>): Record<string, string> =>
     Array.from(labels).reduce((acc, l) => {
@@ -14,10 +17,14 @@ export const getPreferedLabel = (labels: Record<string, string>): string => {
     return values.length > 0 ? values[0] : "no label";
 };
 
+const getRootChildText = (children: ChildNode[], nodeName: string): string =>
+    children.find(c => c.nodeType === Node.ELEMENT_NODE && c.nodeName === nodeName)?.textContent ?? "";
+
 export const getElementURN = (e: Element): string => {
-    const agency = e.querySelector("Agency")?.textContent;
-    const id = e.querySelector("ID")?.textContent;
-    const version = e.querySelector("Version")?.textContent;
+    const children = Array.from(e.childNodes);
+    const agency = getRootChildText(children, "r:Agency");
+    const id = getRootChildText(children, "r:ID");
+    const version = getRootChildText(children, "r:Version");
     return `${agency}:${id}:${version}`;
 };
 
@@ -47,3 +54,30 @@ export const getElementContent = (e: Element): string => {
 };
 
 export const getXMLCode = (e: Element): string => new XMLSerializer().serializeToString(e);
+
+const getIDFromTag = (tag: string): DDIObjectID | undefined => {
+    if (tag.endsWith(C.CATEGORY_XML_TAG)) return C.CATEGORY_ID;
+    if (tag.endsWith(C.CATEGORY_SCHEME_XML_TAG)) return C.CATEGORY_SCHEME_ID;
+    if (tag.endsWith(C.CODE_XML_TAG)) return C.CODE_ID;
+    if (tag.endsWith(C.CODE_LIST_XML_TAG)) return C.CODE_LIST_ID;
+    if (tag.endsWith(C.CODE_LIST_SCHEME_XML_TAG)) return C.CODE_LIST_SCHEME_ID;
+    if (tag.endsWith(C.DDI_INSTANCE_XML_TAG)) return C.DDI_INSTANCE_ID;
+    if (tag.endsWith(C.QUESTION_ITEM_XML_TAG)) return C.QUESTION_ITEM_ID;
+    if (tag.endsWith(C.QUESTION_SCHEME_XML_TAG)) return C.QUESTION_SCHEME_ID;
+    if (tag.endsWith(C.VARIABLE_XML_TAG)) return C.VARIABLE_ID;
+    if (tag.endsWith(C.VARIABLE_SCHEME_XML_TAG)) return C.VARIABLE_SCHEME_ID;
+    return undefined;
+};
+
+export const getParentNode = (parent: Element): DDIBaseObject | undefined => {
+    if (!parent) return undefined;
+
+    const type = getIDFromTag(parent.tagName);
+
+    if (type === undefined) return undefined;
+
+    const URN = getElementURN(parent);
+    const label = getElementContent(parent);
+
+    return { type, URN, label };
+};

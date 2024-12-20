@@ -1,12 +1,12 @@
-import { CODE_ID, CODE_LIST_ID, CODE_XML_PATH } from "@utils/contants";
+import { CODE_ID, CODE_LIST_XML_TAG, CODE_XML_TAG, DDI_L_NAMESPACE } from "@utils/contants";
 
 import { DDIBaseObject, DDIDetailledObject } from "@model/ddi";
 
 import { getCategories } from "./Category";
-import { getXMLCode, getElementContent, getElementURN } from "./common";
+import { getXMLCode, getElementURN, getParentNode } from "./common";
 
 export const getCodes = (xmlDoc: Document | Element): DDIBaseObject[] => {
-    const codes = xmlDoc.getElementsByTagName(CODE_XML_PATH);
+    const codes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CODE_XML_TAG);
     return Array.from(codes).map(v => {
         const value = v.querySelector(":scope > Value")?.textContent || "";
         return {
@@ -18,7 +18,7 @@ export const getCodes = (xmlDoc: Document | Element): DDIBaseObject[] => {
 };
 
 export const getCode = (xmlDoc: Document, id: string): DDIDetailledObject => {
-    const codes = xmlDoc.getElementsByTagName(CODE_XML_PATH);
+    const codes = xmlDoc.getElementsByTagNameNS(DDI_L_NAMESPACE, CODE_XML_TAG);
     const code = Array.from(codes).find(v => {
         const foundId = v.querySelector("ID")?.textContent;
         return id === foundId;
@@ -26,9 +26,8 @@ export const getCode = (xmlDoc: Document, id: string): DDIDetailledObject => {
     if (!code) throw new Error(`Unknow Code: ${id}`);
     const value = code.querySelector(":scope > Value")?.textContent || "";
 
-    const codeList = code.closest("CodeList") as Element;
-    const containedInURN = getElementURN(codeList);
-    const containedInLabel = getElementContent(codeList);
+    const codeListElement = code.closest(CODE_LIST_XML_TAG) as Element;
+    const parentElement = getParentNode(codeListElement);
 
     const categoryReferencesURN = Array.from(code.querySelectorAll(":scope > CategoryReference")).map(
         c => getElementURN(c)
@@ -41,7 +40,7 @@ export const getCode = (xmlDoc: Document, id: string): DDIDetailledObject => {
     return {
         URN: getElementURN(code),
         value,
-        containedIn: { type: CODE_LIST_ID, URN: containedInURN, label: containedInLabel },
+        containedIn: parentElement,
         uses: categoryReferences,
         code: getXMLCode(code)
     };

@@ -16,10 +16,17 @@ spec:
         spec:
             containers:
                 - name: addict
-                  image: makingsenseinfo/addict:0.5.1
+                  image: makingsenseinfo/addict:0.5.4
                   imagePullPolicy: IfNotPresent
                   ports:
                       - containerPort: 8080
                   env:
                       - name: GITHUB_TOKEN
                         value: "XXX"
+                  resources:
+                      requests:
+                          memory: "64Mi"
+                          cpu: "50m"
+                      limits:
+                          memory: "128Mi"
+                          cpu: "200m"

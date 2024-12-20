@@ -1,6 +1,6 @@
 import * as C from "@utils/contants";
 
-export type DDIObjectIDs =
+export type DDIObjectID =
     | typeof C.CATEGORY_ID
     | typeof C.CATEGORY_SCHEME_ID
     | typeof C.CODE_ID
@@ -27,7 +27,7 @@ export type DDIObjectLabels =
 export type DDIBaseObject = {
     URN: string;
     label: string;
-    type: DDIObjectIDs;
+    type: DDIObjectID;
 };
 
 export type DDIDetailledObject = {

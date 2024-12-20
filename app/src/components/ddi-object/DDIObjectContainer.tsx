@@ -10,7 +10,7 @@ import { getContent } from "@api/file-content";
 import { getResourcesUrl } from "@utils/env";
 import { getDDIObject } from "@utils/xml";
 
-import { DDIObjectIDs } from "@model/index";
+import { DDIObjectID } from "@model/index";
 
 import DDIObject from "./DDIObject";
 
@@ -34,7 +34,7 @@ const DDIObjectConstainer = () => {
 
     assert(objectType !== undefined && id !== undefined);
 
-    const type = objectType as DDIObjectIDs;
+    const type = objectType as DDIObjectID;
 
     const object = getDDIObject(xmlDoc, type, id);
 
